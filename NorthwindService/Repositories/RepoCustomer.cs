@@ -25,7 +25,7 @@ namespace NorthwindService.Repositories
             }
         }
 
-
+        #region CRUD Methods
         public async Task<Customer> CreateAsync(Customer customer)
         {
             // normalise customer ID -> capital letters only
@@ -44,29 +44,32 @@ namespace NorthwindService.Repositories
             }
         }
 
-        private Customer UpdateCacheMemory(string id, Customer customer)
+
+        public async Task<bool> DeleteAsync(string id)
         {
-            Customer oldCustomer;
-            if (cacheMemory.TryGetValue(id, out oldCustomer))
+            return await Task.Run(() =>
             {
-                if (cacheMemory.TryUpdate(id, customer, oldCustomer))
+                id = id.ToUpper();
+                Customer customer = dbContext.Customers.Find(id);
+                dbContext.Remove(customer);
+                int changed = dbContext.SaveChanges();
+                if (changed == 1)
                 {
-                    return customer;
+                    return Task.Run(() => cacheMemory.TryRemove(id, out customer));
+                } else
+                {
+                    return null;
                 }
-            }
-            return null;
+            });
         }
 
-        public Task<bool> DeleteAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<IEnumerable<Customer>> ReadAllAsync()
         {
             // get data from cache memory. That's a faster way.
             return await Task.Run<IEnumerable<Customer>>(() => cacheMemory.Values);
         }
+
 
         public async Task<Customer> ReadAsync(string id)
         {
@@ -79,9 +82,37 @@ namespace NorthwindService.Repositories
             });
         }
 
-        public Task<Customer> UpdateAsync(string id, Customer customer)
+
+        public async Task<Customer> UpdateAsync(string id, Customer customer)
         {
-            throw new NotImplementedException();
+            return await Task.Run(() =>
+            {
+                id = id.ToUpper();
+                customer.CustomerID = customer.CustomerID.ToUpper();
+                dbContext.Customers.Update(customer);
+                int changed = dbContext.SaveChanges();
+                if (changed == 1)
+                {
+                    return Task.Run(() => UpdateCacheMemory(id, customer));
+                }
+                return null;
+            });
         }
+        #endregion
+
+        #region OtherMethods
+        private Customer UpdateCacheMemory(string id, Customer customer)
+        {
+            Customer oldCustomer;
+            if (cacheMemory.TryGetValue(id, out oldCustomer))
+            {
+                if (cacheMemory.TryUpdate(id, customer, oldCustomer))
+                {
+                    return customer;
+                }
+            }
+            return null;
+        }
+        #endregion
     }
 }
