@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using NorthwindContextLib;
+using NorthwindService.Repositories;
 
 namespace NorthwindService
 {
@@ -30,6 +31,7 @@ namespace NorthwindService
             services.AddDbContext<NorthwindDbContext>(options => options.UseSqlServer(
                 "Server=(localdb)\\mssqllocaldb;Database=Northwind;Trusted_Connection=True;" +
                 "MultipleActiveResultSets=true;"));
+            services.AddScoped<IRepoCustomer, RepoCustomer>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
