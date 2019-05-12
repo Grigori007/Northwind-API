@@ -24,6 +24,7 @@ namespace NorthwindService.Repositories
             }
         }
 
+
         #region CRUD Methods
         public async Task<Customer> CreateAsync(Customer customer)
         {
@@ -98,6 +99,7 @@ namespace NorthwindService.Repositories
             });
         }
         #endregion
+
 
         #region OtherMethods
         private Customer UpdateCacheMemory(string id, Customer customer)
