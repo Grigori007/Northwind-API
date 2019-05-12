@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NorthwindEntityLib
+namespace NorthwindContextLib
 {
     public class Shipper
     {

@@ -1,4 +1,4 @@
-﻿namespace NorthwindEntityLib
+﻿namespace NorthwindContextLib
 {
     public class OrderDetail
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NorthwindEntityLib
+namespace NorthwindContextLib
 {
     public class Employee
     {
