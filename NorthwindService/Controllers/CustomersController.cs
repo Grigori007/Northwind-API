@@ -49,7 +49,59 @@ namespace NorthwindService.Controllers
         }
 
 
+        // POST: api/customers
+        // BODY: Customer(JSON, XML)
+        [HttpPost]
+        public async Task<IActionResult> CreateCustomer([FromBody] Customer customer)
+        {
+            if (customer == null)
+            {
+                return BadRequest();
+            }
+            Customer added = await customersRepo.CreateAsync(customer);
+            return CreatedAtRoute("ReadOneCustomerAsync", new { id = added.CustomerID.ToLower() }, customer);
+        }
 
 
+        // PUT: api/customers/[id]
+        // BODY: Customer(JSON, XML)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCustomer(string id, [FromBody] Customer customer)
+        {
+            id = id.ToUpper();
+            customer.CustomerID = customer.CustomerID.ToUpper();
+            if (customer == null || customer.CustomerID != id)
+            {
+                return BadRequest();
+            }
+            var existingCustomer = await customersRepo.ReadAsync(id);
+            if (existingCustomer == null)
+            {
+                return NotFound();
+            }
+            await customersRepo.UpdateAsync(id, customer);
+            return new NoContentResult();
+        }
+
+
+        // DELETE: api/customers/[id]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCustomer(string id)
+        {
+            var existingCustomer = await customersRepo.ReadAsync(id);
+            if (existingCustomer == null)
+            {
+                return NotFound();
+            }
+            bool deletedCustomer = await customersRepo.DeleteAsync(id);
+            if (deletedCustomer)
+            {
+                return new NoContentResult();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }
