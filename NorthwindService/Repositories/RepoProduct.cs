@@ -9,7 +9,7 @@ namespace NorthwindService.Repositories
 {
     public class RepoProduct : IRepoProduct
     {
-        private static ConcurrentDictionary<string, Product> cacheMemory;
+        private static ConcurrentDictionary<int, Product> cacheMemory;
         private NorthwindDbContext dbContext;
 
         public RepoProduct(NorthwindDbContext _dbContext)
@@ -18,7 +18,7 @@ namespace NorthwindService.Repositories
 
             if (cacheMemory == null)
             {
-                cacheMemory = new ConcurrentDictionary<string, Product>
+                cacheMemory = new ConcurrentDictionary<int, Product>
                     (dbContext.Products.ToDictionary(c => c.ProductID));
             }
         }
@@ -29,7 +29,7 @@ namespace NorthwindService.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteAsync(string id)
+        public Task<bool> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
@@ -39,7 +39,7 @@ namespace NorthwindService.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Product> ReadAsync(string id)
+        public Task<Product> ReadAsync(int id)
         {
             throw new NotImplementedException();
         }
