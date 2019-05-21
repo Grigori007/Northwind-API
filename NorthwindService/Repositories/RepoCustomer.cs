@@ -53,6 +53,7 @@ namespace NorthwindService.Repositories
                 id = id.ToUpper();
                 Customer customer = dbContext.Customers.Find(id);
                 dbContext.Remove(customer);
+                // the number of state entries written to the database
                 int changed = dbContext.SaveChanges();
                 if (changed == 1)
                 {

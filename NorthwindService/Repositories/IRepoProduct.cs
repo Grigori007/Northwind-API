@@ -10,7 +10,7 @@ namespace NorthwindService.Repositories
         Task<Product> CreateAsync(Product product);
         Task<IEnumerable<Product>> ReadAllAsync();
         Task<Product> ReadAsync(int id);
-        Task<Product> UpdateAsync(Product product);
+        Task<Product> UpdateAsync(int id, Product product);
         Task<bool> DeleteAsync(int id);
     }
 }

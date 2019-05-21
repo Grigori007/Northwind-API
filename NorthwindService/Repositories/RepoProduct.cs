@@ -76,9 +76,21 @@ namespace NorthwindService.Repositories
         }
 
 
-        public Task<Product> UpdateAsync(Product product)
+        public async Task<Product> UpdateAsync(int id, Product product)
         {
-            throw new NotImplementedException();
+            return await Task.Run(() =>
+            {
+                dbContext.Products.Update(product);
+                int changed = dbContext.SaveChanges();
+                if(changed == 1)
+                {
+                    return Task.Run(() => UpdateCacheMemory(id, product)); 
+                }
+                else
+                {
+                    return null;
+                }
+            });
         }
         #endregion
 
