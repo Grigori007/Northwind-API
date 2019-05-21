@@ -38,7 +38,8 @@ namespace NorthwindService.Repositories
                 // if it's a new customer, add them  to cacheMemory
                 // otherwise, invoke AddOrUpdate cache memory method
                 return cacheMemory.AddOrUpdate(customer.CustomerID, customer, UpdateCacheMemory);
-            } else
+            }
+            else
             {
                 return null;
             }
@@ -56,7 +57,8 @@ namespace NorthwindService.Repositories
                 if (changed == 1)
                 {
                     return Task.Run(() => cacheMemory.TryRemove(id, out customer));
-                } else
+                }
+                else
                 {
                     return null;
                 }
