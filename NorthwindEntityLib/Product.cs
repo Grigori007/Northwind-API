@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NorthwindEntityLib;
 
 namespace NorthwindContextLib
 {
-    public class Product
+    public class Product : INorthwindDb
     {
         public int ProductID { get; set; }
         public string ProductName { get; set; }

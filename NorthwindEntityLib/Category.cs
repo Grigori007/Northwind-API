@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using NorthwindEntityLib;
+using System.Collections.Generic;
 
 namespace NorthwindContextLib
 {
-    public class Category
+    public class Category : INorthwindDb
     {
         public int CategoryID { get; set; }
         public string CategoryName { get; set; }

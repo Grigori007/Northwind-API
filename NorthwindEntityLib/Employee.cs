@@ -1,9 +1,10 @@
-﻿using System;
+﻿using NorthwindEntityLib;
+using System;
 using System.Collections.Generic;
 
 namespace NorthwindContextLib
 {
-    public class Employee
+    public class Employee : INorthwindDb
     {
         public int EmployeeID { get; set; }
         public string LastName { get; set; }

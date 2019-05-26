@@ -1,9 +1,10 @@
-﻿using System;
+﻿using NorthwindEntityLib;
+using System;
 using System.Collections.Generic;
 
-namespace NorthwindContextLib
+namespace NorthwindContextLib 
 {
-    public class Order
+    public class Order : INorthwindDb
     {
         public int OrderID { get; set; }
         public string CustomerID { get; set; }

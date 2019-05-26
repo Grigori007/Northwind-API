@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using NorthwindEntityLib;
+using System.Collections.Generic;
 
 namespace NorthwindContextLib
 {
-    public class Supplier
+    public class Supplier : INorthwindDb
     {
         public int SupplierID { get; set; }
         public string CompanyName { get; set; }

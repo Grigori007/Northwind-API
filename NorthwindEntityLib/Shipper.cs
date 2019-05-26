@@ -1,10 +1,9 @@
-﻿using System;
+﻿using NorthwindEntityLib;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NorthwindContextLib
 {
-    public class Shipper
+    public class Shipper : INorthwindDb
     {
         public int ShipperID { get; set; }
         public string ShipperName { get; set; }

@@ -1,6 +1,8 @@
-﻿namespace NorthwindContextLib
+﻿using NorthwindEntityLib;
+
+namespace NorthwindContextLib
 {
-    public class OrderDetail
+    public class OrderDetail : INorthwindDb
     {
         public int OrderID { get; set; }
         public Order Order { get; set; }
