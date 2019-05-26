@@ -8,12 +8,12 @@ using NorthwindEntityLib;
 
 namespace NorthwindService.Repositories
 {
-    public interface IRepoUniversal
+    public interface IRepoUniversal<TEntity> where TEntity : class, INorthwindDb
     {
-        Task<TEntity> CreateAsync<TEntity>(TEntity entity) where TEntity : class, INorthwindDb;
-        Task<IEnumerable<TEntity>> ReadAllAsync<TEntity>() where TEntity : class, INorthwindDb;
-        Task<TEntity> ReadAsync<TEntity>(string id) where TEntity : class, INorthwindDb;
-        Task<TEntity> UpdateAsync<TEntity>(string id) where TEntity : class, INorthwindDb;
+        Task<TEntity> CreateAsync(TEntity entity);
+        Task<IEnumerable<TEntity>> ReadAllAsync();
+        Task<TEntity> ReadAsync(string id);
+        Task<TEntity> UpdateAsync(string id);
         Task<bool> DeleteAsync(string id);
 
     }

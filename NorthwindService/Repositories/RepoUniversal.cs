@@ -8,7 +8,7 @@ using NorthwindEntityLib;
 
 namespace NorthwindService.Repositories
 {
-    public class RepoUniversal : IRepoUniversal
+    public class RepoUniversal<TEntity> : IRepoUniversal<TEntity> where TEntity : class, INorthwindDb
     {
         // TODO: Define a new type fot DB implementing INorthwind interface
         // private static ConcurrentDictionary<string, TEntity> cacheMemory 
@@ -20,27 +20,27 @@ namespace NorthwindService.Repositories
 
         }
 
+        public Task<TEntity> CreateAsync(TEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<bool> DeleteAsync(string id)
         {
             throw new NotImplementedException();
         }
 
-        Task<TEntity> IRepoUniversal.CreateAsync<TEntity>(TEntity entity)
+        public Task<IEnumerable<TEntity>> ReadAllAsync()
         {
             throw new NotImplementedException();
         }
 
-        Task<IEnumerable<TEntity>> IRepoUniversal.ReadAllAsync<TEntity>()
+        public Task<TEntity> ReadAsync(string id)
         {
             throw new NotImplementedException();
         }
 
-        Task<TEntity> IRepoUniversal.ReadAsync<TEntity>(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<TEntity> IRepoUniversal.UpdateAsync<TEntity>(string id)
+        public Task<TEntity> UpdateAsync(string id)
         {
             throw new NotImplementedException();
         }
