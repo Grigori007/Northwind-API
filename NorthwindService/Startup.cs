@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NorthwindContextLib;
 using NorthwindService.Repositories;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace NorthwindService
 {
@@ -25,6 +26,10 @@ namespace NorthwindService
                 "Server=(localdb)\\mssqllocaldb;Database=Northwind;Trusted_Connection=True;" +
                 "MultipleActiveResultSets=true;"));
             services.AddScoped<IRepoCustomer, RepoCustomer>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info() {Title = "Northwind API", Version = "v1"});
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -42,6 +47,11 @@ namespace NorthwindService
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Northwind API v1");
+            });
         }
     }
 }

@@ -17,7 +17,6 @@ namespace NorthwindService.Repositories
         public RepoUniversal(NorthwindDbContext _dbContext)
         {
             dbContext = _dbContext;
-
         }
 
         public Task<TEntity> CreateAsync(TEntity entity)
