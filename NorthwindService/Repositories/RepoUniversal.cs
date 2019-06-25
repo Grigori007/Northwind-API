@@ -12,7 +12,7 @@ namespace NorthwindService.Repositories
     {
         // TODO: Define a new type fot DB implementing INorthwind interface
         // private static ConcurrentDictionary<string, TEntity> cacheMemory 
-        private NorthwindDbContext dbContext;
+        private readonly NorthwindDbContext dbContext;
 
         public RepoUniversal(NorthwindDbContext _dbContext)
         {
@@ -29,15 +29,21 @@ namespace NorthwindService.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TEntity>> ReadAllAsync()
+        public async Task<IEnumerable<TEntity>> ReadAllAsync()
         {
-            throw new NotImplementedException();
+            //return await Task<IEnumerable<TEntity>>(() => dbContext.Set<TEntity>().ToList());
+            return await Task.Run(() =>
+            {
+                return dbContext.Set<TEntity>().ToList();
+            });
         }
 
-        public Task<TEntity> ReadAsync(string id)
+
+        public async Task<TEntity> ReadAsync(string id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Set<TEntity>().FindAsync(id);
         }
+
 
         public Task<TEntity> UpdateAsync(string id)
         {
