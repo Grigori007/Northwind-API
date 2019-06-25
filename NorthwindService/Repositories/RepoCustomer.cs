@@ -9,8 +9,8 @@ namespace NorthwindService.Repositories
 {
     public class RepoCustomer : IRepoCustomer
     {
-        private static ConcurrentDictionary<string, Customer> cacheMemory;
         private NorthwindDbContext dbContext;
+        private static ConcurrentDictionary<string, Customer> cacheMemory;
 
 
         public RepoCustomer(NorthwindDbContext _dbContext)
