@@ -24,5 +24,7 @@ namespace NorthwindContextLib
         public int ReportsTo { get; set; }
         public Employee Manager { get; set; }
         public ICollection<Order> Orders { get; set; }
+
+        public int EntityID => EmployeeID;
     }
 }

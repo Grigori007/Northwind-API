@@ -16,5 +16,7 @@ namespace NorthwindContextLib
         public short? UnitsInOrder { get; set; } = 0;
         public short? RecorderLevel { get; set; } = 0;
         public bool IsDiscontinued { get; set; } = false;
+
+        public int EntityID => ProductID;
     }
 }

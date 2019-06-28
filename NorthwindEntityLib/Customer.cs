@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace NorthwindContextLib
 {
-    public class Customer : INorthwindDb
+    // no INorthwindDb beacuse of string ID -> has it's own repo
+    public class Customer
     {
         public string CustomerID { get; set; }
         public string CompanyName { get; set; }

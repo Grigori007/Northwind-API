@@ -18,5 +18,7 @@ namespace NorthwindContextLib
         public Shipper Shipper { get; set; }
         public decimal? Freight { get; set; } = 0;
         public ICollection<OrderDetail> OrderDetails { get; set; }
+
+        public int EntityID => OrderID;
     }
 }

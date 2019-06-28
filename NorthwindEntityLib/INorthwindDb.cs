@@ -6,5 +6,6 @@ namespace NorthwindEntityLib
 {
     public interface INorthwindDb
     {
+        int EntityID { get; }
     }
 }

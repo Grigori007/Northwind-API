@@ -12,9 +12,9 @@ namespace NorthwindService.Repositories
     {
         Task<TEntity> CreateAsync(TEntity entity);
         Task<IEnumerable<TEntity>> ReadAllAsync();
-        Task<TEntity> ReadAsync(string id);
-        Task<TEntity> UpdateAsync(TEntity entity);
-        Task<bool> DeleteAsync(string id);
+        Task<TEntity> ReadAsync(int id);
+        Task<TEntity> UpdateAsync(int id, TEntity entity);
+        Task<bool> DeleteAsync(int id);
 
     }
 }
