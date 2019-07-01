@@ -1,10 +1,16 @@
 ﻿using NorthwindEntityLib;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace NorthwindContextLib
 {
     public class CategoryDto : INorthwindDb
     {
+        public CategoryDto()
+        {
+            this.Products = new Collection<ProductDto>();
+        }
+
         public int CategoryID { get; set; }
         public string CategoryName { get; set; }
         public string Description { get; set; }

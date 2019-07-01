@@ -1,10 +1,16 @@
 ﻿using NorthwindEntityLib;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace NorthwindContextLib
 {
     public class SupplierDto : INorthwindDb
     {
+        public SupplierDto()
+        {
+            this.Products = new Collection<ProductDto>();
+        }
+
         public int SupplierID { get; set; }
         public string CompanyName { get; set; }
         public string ContactName { get; set; }

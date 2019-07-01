@@ -1,11 +1,17 @@
 ﻿using NorthwindEntityLib;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace NorthwindContextLib
 {
     // no INorthwindDb beacuse of string ID -> has it's own repo
     public class CustomerDto
     {
+        public CustomerDto()
+        {
+            this.Orders = new Collection<OrderDto>();
+        }
+
         public string CustomerID { get; set; }
         public string CompanyName { get; set; }
         public string ContactName { get; set; }

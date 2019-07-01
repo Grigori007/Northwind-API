@@ -1,11 +1,17 @@
 ﻿using NorthwindEntityLib;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace NorthwindContextLib 
 {
     public class OrderDto : INorthwindDb
     {
+        public OrderDto()
+        {
+            this.OrderDetails = new Collection<OrderDetailDto>();
+        }
+
         public int OrderID { get; set; }
         public string CustomerID { get; set; }
         public CustomerDto Customer { get; set; }
