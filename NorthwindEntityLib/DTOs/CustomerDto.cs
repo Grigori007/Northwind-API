@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace NorthwindContextLib
 {
     // no INorthwindDb beacuse of string ID -> has it's own repo
-    public class Customer
+    public class CustomerDto
     {
         public string CustomerID { get; set; }
         public string CompanyName { get; set; }
@@ -17,6 +17,6 @@ namespace NorthwindContextLib
         public string Country { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<OrderDto> Orders { get; set; }
     }
 }

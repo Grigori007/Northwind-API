@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NorthwindContextLib
 {
-    public class Supplier : INorthwindDb
+    public class SupplierDto : INorthwindDb
     {
         public int SupplierID { get; set; }
         public string CompanyName { get; set; }
@@ -17,7 +17,7 @@ namespace NorthwindContextLib
         public string Phone { get; set; }
         public string Fax { get; set; }
         public string HomePage { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public ICollection<ProductDto> Products { get; set; }
 
         public int EntityID => SupplierID;
     }

@@ -10,7 +10,7 @@ namespace NorthwindService.Repositories
     public class RepoCustomer : IRepoCustomer
     {
         private NorthwindDbContext dbContext;
-        private static ConcurrentDictionary<string, Customer> cacheMemory;
+        private static ConcurrentDictionary<string, CustomerDto> cacheMemory;
 
 
         public RepoCustomer(NorthwindDbContext _dbContext)
@@ -19,18 +19,18 @@ namespace NorthwindService.Repositories
 
             if (cacheMemory == null)
             {
-                cacheMemory = new ConcurrentDictionary<string, Customer>
+                cacheMemory = new ConcurrentDictionary<string, CustomerDto>
                     (dbContext.Customers.ToDictionary(c => c.CustomerID));
             }
         }
 
 
         #region CRUD Methods
-        public async Task<Customer> CreateAsync(Customer customer)
+        public async Task<CustomerDto> CreateAsync(CustomerDto customer)
         {
             // normalise customer ID -> capital letters only
             customer.CustomerID = customer.CustomerID.ToUpper();
-            EntityEntry<Customer> added = await dbContext.Customers.AddAsync(customer);
+            EntityEntry<CustomerDto> added = await dbContext.Customers.AddAsync(customer);
             int changed = await dbContext.SaveChangesAsync();
 
             if (changed == 1)
@@ -51,7 +51,7 @@ namespace NorthwindService.Repositories
             return await Task.Run(() =>
             {
                 id = id.ToUpper();
-                Customer customer = dbContext.Customers.Find(id);
+                CustomerDto customer = dbContext.Customers.Find(id);
                 dbContext.Remove(customer);
                 // the number of state entries written to the database
                 int changed = dbContext.SaveChanges();
@@ -67,26 +67,26 @@ namespace NorthwindService.Repositories
         }
 
 
-        public async Task<IEnumerable<Customer>> ReadAllAsync()
+        public async Task<IEnumerable<CustomerDto>> ReadAllAsync()
         {
             // get data from cache memory. That's a faster way.
-            return await Task.Run<IEnumerable<Customer>>(() => cacheMemory.Values);
+            return await Task.Run<IEnumerable<CustomerDto>>(() => cacheMemory.Values);
         }
 
 
-        public async Task<Customer> ReadAsync(string id)
+        public async Task<CustomerDto> ReadAsync(string id)
         {
             return await Task.Run(() =>
             {
                 id = id.ToUpper();
-                Customer customer;
+                CustomerDto customer;
                 cacheMemory.TryGetValue(id, out customer);
                 return customer;
             });
         }
 
 
-        public async Task<Customer> UpdateAsync(string id, Customer customer)
+        public async Task<CustomerDto> UpdateAsync(string id, CustomerDto customer)
         {
             return await Task.Run(() =>
             {
@@ -105,9 +105,9 @@ namespace NorthwindService.Repositories
 
 
         #region OtherMethods
-        private Customer UpdateCacheMemory(string id, Customer customer)
+        private CustomerDto UpdateCacheMemory(string id, CustomerDto customer)
         {
-            Customer oldCustomer;
+            CustomerDto oldCustomer;
             if (cacheMemory.TryGetValue(id, out oldCustomer))
             {
                 if (cacheMemory.TryUpdate(id, customer, oldCustomer))

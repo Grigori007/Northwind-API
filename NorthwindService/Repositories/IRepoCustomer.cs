@@ -6,10 +6,10 @@ namespace NorthwindService.Repositories
 {
     public interface IRepoCustomer
     {
-        Task<Customer> CreateAsync(Customer customer);
-        Task<IEnumerable<Customer>> ReadAllAsync();
-        Task<Customer> ReadAsync(string id);
-        Task<Customer> UpdateAsync(string id, Customer customer);
+        Task<CustomerDto> CreateAsync(CustomerDto customer);
+        Task<IEnumerable<CustomerDto>> ReadAllAsync();
+        Task<CustomerDto> ReadAsync(string id);
+        Task<CustomerDto> UpdateAsync(string id, CustomerDto customer);
         Task<bool> DeleteAsync(string id);
     }
 }

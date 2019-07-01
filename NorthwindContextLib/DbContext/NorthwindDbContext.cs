@@ -10,86 +10,86 @@ namespace NorthwindContextLib
 
         }
 
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Shipper> Shippers { get; set; }
-        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<CategoryDto> Categories { get; set; }
+        public DbSet<CustomerDto> Customers { get; set; }
+        public DbSet<EmployeeDto> Employees { get; set; }
+        public DbSet<OrderDto> Orders { get; set; }
+        public DbSet<OrderDetailDto> OrderDetails { get; set; }
+        public DbSet<ProductDto> Products { get; set; }
+        public DbSet<ShipperDto> Shippers { get; set; }
+        public DbSet<SupplierDto> Suppliers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Category>()
+            modelBuilder.Entity<CategoryDto>()
                 .Property(c => c.CategoryName)
                 .IsRequired() // by default, it's true
                 .HasMaxLength(15);
 
             // definig one-to-many relationship
-            modelBuilder.Entity<Category>()
+            modelBuilder.Entity<CategoryDto>()
                 .HasMany(c => c.Products)
                 .WithOne(p => p.Category);
 
-            modelBuilder.Entity<Customer>()
+            modelBuilder.Entity<CustomerDto>()
                 .Property(c => c.CustomerID)
                 .IsRequired()
                 .HasMaxLength(5);
 
-            modelBuilder.Entity<Customer>()
+            modelBuilder.Entity<CustomerDto>()
                 .Property(c => c.CompanyName)
                 .IsRequired()
                 .HasMaxLength(40);
 
-            modelBuilder.Entity<Customer>()
+            modelBuilder.Entity<CustomerDto>()
                 .Property(c => c.ContactName)
                 .HasMaxLength(30);
 
-            modelBuilder.Entity<Customer>()
+            modelBuilder.Entity<CustomerDto>()
                 .Property(c => c.Country)
                 .HasMaxLength(15);
 
-            modelBuilder.Entity<Employee>()
+            modelBuilder.Entity<EmployeeDto>()
                 .Property(c => c.LastName)
                 .IsRequired()
                 .HasMaxLength(20);
 
-            modelBuilder.Entity<Employee>()
+            modelBuilder.Entity<EmployeeDto>()
                 .Property(c => c.FirstName)
                 .IsRequired()
                 .HasMaxLength(10);
 
-            modelBuilder.Entity<Employee>()
+            modelBuilder.Entity<EmployeeDto>()
                 .Property(c => c.Country)
                 .HasMaxLength(15);
 
-            modelBuilder.Entity<Product>()
+            modelBuilder.Entity<ProductDto>()
                 .Property(c => c.ProductName)
                 .IsRequired()
                 .HasMaxLength(40);
 
-            modelBuilder.Entity<Product>()
+            modelBuilder.Entity<ProductDto>()
                 .HasOne(p => p.Category)
                 .WithMany(p => p.Products);
 
-            modelBuilder.Entity<Product>()
+            modelBuilder.Entity<ProductDto>()
                 .HasOne(p => p.Supplier)
                 .WithMany(s => s.Products);
 
-            modelBuilder.Entity<OrderDetail>().ToTable("Order Details");
+            modelBuilder.Entity<OrderDetailDto>().ToTable("Order Details");
 
             // defining multi-column main key for OrderDetails table
-            modelBuilder.Entity<OrderDetail>()
+            modelBuilder.Entity<OrderDetailDto>()
                 .HasKey(o => new { o.OrderID, o.ProductID });
 
-            modelBuilder.Entity<Supplier>()
+            modelBuilder.Entity<SupplierDto>()
                 .Property(c => c.CompanyName)
                 .IsRequired()
                 .HasMaxLength(40);
 
-            modelBuilder.Entity<Supplier>()
+            modelBuilder.Entity<SupplierDto>()
                 .HasMany(s => s.Products)
                 .WithOne(p => p.Supplier);
         }

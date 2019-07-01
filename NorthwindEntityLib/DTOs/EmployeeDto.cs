@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NorthwindContextLib
 {
-    public class Employee : INorthwindDb
+    public class EmployeeDto : INorthwindDb
     {
         public int EmployeeID { get; set; }
         public string LastName { get; set; }
@@ -22,8 +22,8 @@ namespace NorthwindContextLib
         public string Extension { get; set; }
         public string Notes { get; set; }
         public int ReportsTo { get; set; }
-        public Employee Manager { get; set; }
-        public ICollection<Order> Orders { get; set; }
+        public EmployeeDto Manager { get; set; }
+        public ICollection<OrderDto> Orders { get; set; }
 
         public int EntityID => EmployeeID;
     }
