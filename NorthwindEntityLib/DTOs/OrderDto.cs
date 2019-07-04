@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindContextLib 
 {
@@ -12,10 +13,11 @@ namespace NorthwindContextLib
             this.OrderDetails = new Collection<OrderDetailDto>();
         }
 
-        public int OrderID { get; set; }
-        public string CustomerID { get; set; }
+        [Key]
+        public int OrderId { get; set; }
+        public string CustomerId { get; set; }
         public CustomerDto Customer { get; set; }
-        public int EmployeeID { get; set; }
+        public int EmployeeId { get; set; }
         public EmployeeDto Employee { get; set; }
         public DateTime? OrderDate { get; set; }
         public DateTime? RequiredDate { get; set; }
@@ -25,6 +27,6 @@ namespace NorthwindContextLib
         public decimal? Freight { get; set; } = 0;
         public ICollection<OrderDetailDto> OrderDetails { get; set; }
 
-        public int EntityID => OrderID;
+        public int EntityId => OrderId;
     }
 }

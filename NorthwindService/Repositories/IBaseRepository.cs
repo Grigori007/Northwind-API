@@ -8,7 +8,7 @@ using NorthwindEntityLib;
 
 namespace NorthwindService.Repositories
 {
-    public interface IRepoUniversal<TEntity> where TEntity : class, INorthwindDb
+    public interface IBaseRepository<TEntity> where TEntity : class, INorthwindDb
     {
         Task<TEntity> CreateAsync(TEntity entity);
         Task<IEnumerable<TEntity>> ReadAllAsync();

@@ -9,21 +9,21 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace NorthwindService.Repositories
 {
-    public class RepoUniversal<TEntity> : IRepoUniversal<TEntity> where TEntity : class, INorthwindDb
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, INorthwindDb
     {
         // TODO: string may not work as in ID for all NorthwindDB enitites 
         private readonly NorthwindDbContext dbContext;
         // Scoped or Transient for cache memory ????
         private static ConcurrentDictionary<int, TEntity> cacheMemory;
 
-        public RepoUniversal(NorthwindDbContext _dbContext)
+        public BaseRepository(NorthwindDbContext _dbContext)
         {
             dbContext = _dbContext;
 
             if (cacheMemory == null)
             {
                 cacheMemory = new ConcurrentDictionary<int, TEntity>
-                    (dbContext.Set<TEntity>().ToDictionary(t => t.EntityID));
+                    (dbContext.Set<TEntity>().ToDictionary(t => t.EntityId));
             }
         }
 
@@ -36,7 +36,7 @@ namespace NorthwindService.Repositories
             
             if(changed == 1)
             {
-                return cacheMemory.AddOrUpdate(entity.EntityID, entity, UpdateCacheMemory);
+                return cacheMemory.AddOrUpdate(entity.EntityId, entity, UpdateCacheMemory);
             }
             else
             {

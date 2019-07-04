@@ -1,6 +1,7 @@
 ﻿using NorthwindEntityLib;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindContextLib
 {
@@ -11,11 +12,12 @@ namespace NorthwindContextLib
             this.Orders = new Collection<OrderDto>();
         }
 
-        public int ShipperID { get; set; }
+        [Key]
+        public int ShipperId { get; set; }
         public string ShipperName { get; set; }
         public string Phone { get; set; }
         public ICollection<OrderDto> Orders { get; set; }
 
-        public int EntityID => ShipperID;
+        public int EntityId => ShipperId;
     }
 }

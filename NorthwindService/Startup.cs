@@ -27,7 +27,7 @@ namespace NorthwindService
                 "MultipleActiveResultSets=true;"));
             services.AddScoped<IRepoCustomer, RepoCustomer>();
             // registering generic service !!!
-            services.AddScoped(typeof(IRepoUniversal<>), typeof(RepoUniversal<>));
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info() {Title = "Northwind API", Version = "v1"});

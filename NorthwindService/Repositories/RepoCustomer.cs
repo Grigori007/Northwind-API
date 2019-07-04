@@ -20,7 +20,7 @@ namespace NorthwindService.Repositories
             if (cacheMemory == null)
             {
                 cacheMemory = new ConcurrentDictionary<string, CustomerDto>
-                    (dbContext.Customers.ToDictionary(c => c.CustomerID));
+                    (dbContext.Customers.ToDictionary(c => c.CustomerId));
             }
         }
 
@@ -29,7 +29,7 @@ namespace NorthwindService.Repositories
         public async Task<CustomerDto> CreateAsync(CustomerDto customer)
         {
             // normalise customer ID -> capital letters only
-            customer.CustomerID = customer.CustomerID.ToUpper();
+            customer.CustomerId = customer.CustomerId.ToUpper();
             EntityEntry<CustomerDto> added = await dbContext.Customers.AddAsync(customer);
             int changed = await dbContext.SaveChangesAsync();
 
@@ -37,7 +37,7 @@ namespace NorthwindService.Repositories
             {
                 // if it's a new customer, add them  to cacheMemory
                 // otherwise, invoke AddOrUpdate cache memory method
-                return cacheMemory.AddOrUpdate(customer.CustomerID, customer, UpdateCacheMemory);
+                return cacheMemory.AddOrUpdate(customer.CustomerId, customer, UpdateCacheMemory);
             }
             else
             {
@@ -91,7 +91,7 @@ namespace NorthwindService.Repositories
             return await Task.Run(() =>
             {
                 id = id.ToUpper();
-                customer.CustomerID = customer.CustomerID.ToUpper();
+                customer.CustomerId = customer.CustomerId.ToUpper();
                 dbContext.Customers.Update(customer);
                 int changed = dbContext.SaveChanges();
                 if (changed == 1)

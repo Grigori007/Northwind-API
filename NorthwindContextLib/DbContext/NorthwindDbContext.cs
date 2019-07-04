@@ -7,7 +7,6 @@ namespace NorthwindContextLib
     {
         public NorthwindDbContext(DbContextOptions options) : base(options)
         {
-
         }
 
         public DbSet<CategoryDto> Categories { get; set; }
@@ -34,7 +33,7 @@ namespace NorthwindContextLib
                 .WithOne(p => p.Category);
 
             modelBuilder.Entity<CustomerDto>()
-                .Property(c => c.CustomerID)
+                .Property(c => c.CustomerId)
                 .IsRequired()
                 .HasMaxLength(5);
 
@@ -82,7 +81,7 @@ namespace NorthwindContextLib
 
             // defining multi-column main key for OrderDetails table
             modelBuilder.Entity<OrderDetailDto>()
-                .HasKey(o => new { o.OrderID, o.ProductID });
+                .HasKey(o => new { o.OrderId, o.ProductId });
 
             modelBuilder.Entity<SupplierDto>()
                 .Property(c => c.CompanyName)

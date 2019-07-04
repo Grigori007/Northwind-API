@@ -58,7 +58,7 @@ namespace NorthwindService.Controllers
                 return BadRequest();
             }
             CustomerDto added = await customersRepo.CreateAsync(customer);
-            return CreatedAtRoute("ReadOneCustomerAsync", new { id = added.CustomerID.ToLower() }, customer);
+            return CreatedAtRoute("ReadOneCustomerAsync", new { id = added.CustomerId.ToLower() }, customer);
         }
 
 
@@ -68,8 +68,8 @@ namespace NorthwindService.Controllers
         public async Task<IActionResult> UpdateCustomer(string id, [FromBody] CustomerDto customer)
         {
             id = id.ToUpper();
-            customer.CustomerID = customer.CustomerID.ToUpper();
-            if (customer == null || customer.CustomerID != id)
+            customer.CustomerId = customer.CustomerId.ToUpper();
+            if (customer == null || customer.CustomerId != id)
             {
                 return BadRequest();
             }

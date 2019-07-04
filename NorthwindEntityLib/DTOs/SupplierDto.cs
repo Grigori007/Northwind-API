@@ -1,6 +1,7 @@
 ﻿using NorthwindEntityLib;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindContextLib
 {
@@ -11,7 +12,8 @@ namespace NorthwindContextLib
             this.Products = new Collection<ProductDto>();
         }
 
-        public int SupplierID { get; set; }
+        [Key]
+        public int SupplierId { get; set; }
         public string CompanyName { get; set; }
         public string ContactName { get; set; }
         public string ContactTitle { get; set; }
@@ -25,6 +27,6 @@ namespace NorthwindContextLib
         public string HomePage { get; set; }
         public ICollection<ProductDto> Products { get; set; }
 
-        public int EntityID => SupplierID;
+        public int EntityId => SupplierId;
     }
 }
