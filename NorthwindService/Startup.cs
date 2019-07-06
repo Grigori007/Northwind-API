@@ -30,6 +30,8 @@ namespace NorthwindService
             {
                 c.SwaggerDoc("v1", new Info() {Title = "Northwind API", Version = "v1"});
             });
+            // disable looping in order for eager loading to work properly
+            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

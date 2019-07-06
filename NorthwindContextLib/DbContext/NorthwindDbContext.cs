@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 //using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace NorthwindContextLib
@@ -7,6 +8,23 @@ namespace NorthwindContextLib
     {
         public NorthwindDbContext(DbContextOptions options) : base(options)
         {
+            // enabling eager loading 
+            Categories.Include(c => c.Products).ToList();
+            Customers.Include(c => c.Orders).ToList();
+            Employees.Include(c => c.Manager);
+            Employees.Include(c => c.Orders).ToList();
+            Orders.Include(c => c.Customer);
+            Orders.Include(c => c.Employee);
+            Orders.Include(c => c.Shipper);
+            Orders.Include(c => c.OrderDetails).ToList();
+            OrderDetails.Include(c => c.Order);
+            OrderDetails.Include(c => c.Product);
+            Products.Include(c => c.Supplier);
+            Products.Include(c => c.Category);
+            Shippers.Include(c => c.Orders).ToList();
+            Suppliers.Include(c => c.Products).ToList();
+            
+
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -68,6 +86,10 @@ namespace NorthwindContextLib
             #region Employee
             modelBuilder.Entity<Employee>()
                 .HasKey(c => c.EmployeeId);
+
+            //modelBuilder.Entity<Employee>()
+            //    .HasOne(c => c.Manager)
+            //    .WithMany()
 
             modelBuilder.Entity<Employee>()
                 .Property(c => c.LastName)
