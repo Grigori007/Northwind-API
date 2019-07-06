@@ -6,9 +6,9 @@ namespace NorthwindService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : GenericController<OrderDto>
+    public class OrdersController : GenericController<Order>
     {
-        public OrdersController(IBaseRepository<OrderDto> _repo) : base(_repo)
+        public OrdersController(IBaseRepository<Order> _repo) : base(_repo)
         {
         }
     }

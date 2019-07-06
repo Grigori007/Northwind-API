@@ -72,8 +72,7 @@ namespace NorthwindService.Repositories
         public async Task<TEntity> ReadAsync(int id)
         {
             return await Task.Run(() => {
-                TEntity entity;
-                cacheMemory.TryGetValue(id, out entity);
+                cacheMemory.TryGetValue(id, out TEntity entity);
                 return entity;
             });
         }
@@ -97,8 +96,7 @@ namespace NorthwindService.Repositories
         #region OtherMethods
         private TEntity UpdateCacheMemory(int id, TEntity entity)
         {
-            TEntity oldEntity;
-            if(cacheMemory.TryGetValue(id, out oldEntity))
+            if(cacheMemory.TryGetValue(id, out TEntity oldEntity))
             {
                 if(cacheMemory.TryUpdate(id, entity, oldEntity))
                 {

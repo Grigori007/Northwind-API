@@ -1,22 +1,20 @@
 ﻿using NorthwindEntityLib;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindContextLib
 {
-    public class ShipperDto : INorthwindDb
+    public class Shipper : INorthwindDb
     {
-        public ShipperDto()
+        public Shipper()
         {
-            this.Orders = new Collection<OrderDto>();
+            this.Orders = new Collection<Order>();
         }
 
-        [Key]
         public int ShipperId { get; set; }
-        public string ShipperName { get; set; }
+        public string CompanyName { get; set; }
         public string Phone { get; set; }
-        public ICollection<OrderDto> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
 
         public int EntityId => ShipperId;
     }

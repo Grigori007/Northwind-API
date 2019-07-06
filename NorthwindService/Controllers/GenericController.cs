@@ -14,7 +14,6 @@ namespace NorthwindService.Controllers
     public class GenericController<T> : ControllerBase where T : class, INorthwindDb
     {
         private readonly IBaseRepository<T> repository;
-        private const string getMethodName = "A";
 
         public GenericController(IBaseRepository<T> _repository)
         {

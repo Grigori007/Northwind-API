@@ -6,9 +6,9 @@ namespace NorthwindService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeesController : GenericController<EmployeeDto>
+    public class EmployeesController : GenericController<Employee>
     {
-        public EmployeesController(IBaseRepository<EmployeeDto> _repo) : base(_repo)
+        public EmployeesController(IBaseRepository<Employee> _repo) : base(_repo)
         { 
         }
     }

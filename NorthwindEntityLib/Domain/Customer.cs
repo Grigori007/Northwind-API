@@ -1,19 +1,17 @@
-﻿using NorthwindEntityLib;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindContextLib
 {
-    public class SupplierDto : INorthwindDb
+    // no INorthwindDb beacuse of string ID -> has it's own repo
+    public class Customer
     {
-        public SupplierDto()
+        public Customer()
         {
-            this.Products = new Collection<ProductDto>();
+            this.Orders = new Collection<Order>();
         }
 
-        [Key]
-        public int SupplierId { get; set; }
+        public string CustomerId { get; set; }
         public string CompanyName { get; set; }
         public string ContactName { get; set; }
         public string ContactTitle { get; set; }
@@ -24,9 +22,6 @@ namespace NorthwindContextLib
         public string Country { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
-        public string HomePage { get; set; }
-        public ICollection<ProductDto> Products { get; set; }
-
-        public int EntityId => SupplierId;
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

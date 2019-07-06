@@ -1,18 +1,15 @@
 ﻿using NorthwindEntityLib;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindContextLib
 {
-    public class ProductDto : INorthwindDb
+    public class Product : INorthwindDb
     {
-        [Key]
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public int? SupplierId { get; set; }
-        public SupplierDto Supplier { get; set; }
+        public virtual Supplier Supplier { get; set; }
         public int? CategoryId { get; set; }
-        public CategoryDto Category { get; set; }
+        public virtual Category Category { get; set; }
         public string QuantityPerUnit { get; set; }
         public decimal? UnitPrice { get; set; } = 0;
         public short? UnitsInStock { get; set; } = 0;

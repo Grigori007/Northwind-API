@@ -1,22 +1,20 @@
 ﻿using NorthwindEntityLib;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindContextLib
 {
-    public class CategoryDto : INorthwindDb
+    public class Category : INorthwindDb
     {
-        public CategoryDto()
+        public Category()
         {
-            this.Products = new Collection<ProductDto>();
+            this.Products = new Collection<Product>();
         }
 
-        [Key]
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string Description { get; set; }
-        public ICollection<ProductDto> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
 
         public int EntityId => CategoryId;
     }

@@ -21,7 +21,7 @@ namespace NorthwindService.Controllers
         // GET: api/customers
         // GET: api/customers/?country=[country]
         [HttpGet]
-        public async Task<IEnumerable<CustomerDto>> ReadCustomersAsync(string country)
+        public async Task<IEnumerable<Customer>> ReadCustomersAsync(string country)
         {
             if (string.IsNullOrWhiteSpace(country))
             {
@@ -39,7 +39,7 @@ namespace NorthwindService.Controllers
         [HttpGet("{id}", Name = "ReadOneCustomerAsync")]
         public async Task<IActionResult> ReadOneCustomerAsync(string id)
         {
-            CustomerDto customer = await customersRepo.ReadAsync(id);
+            Customer customer = await customersRepo.ReadAsync(id);
             if (customer == null)
             {
                 return NotFound();
@@ -51,13 +51,13 @@ namespace NorthwindService.Controllers
         // POST: api/customers
         // BODY: Customer(JSON, XML)
         [HttpPost]
-        public async Task<IActionResult> CreateCustomer([FromBody] CustomerDto customer)
+        public async Task<IActionResult> CreateCustomer([FromBody] Customer customer)
         {
             if (customer == null)
             {
                 return BadRequest();
             }
-            CustomerDto added = await customersRepo.CreateAsync(customer);
+            Customer added = await customersRepo.CreateAsync(customer);
             return CreatedAtRoute("ReadOneCustomerAsync", new { id = added.CustomerId.ToLower() }, customer);
         }
 
@@ -65,7 +65,7 @@ namespace NorthwindService.Controllers
         // PUT: api/customers/[id]
         // BODY: Customer(JSON, XML)
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCustomer(string id, [FromBody] CustomerDto customer)
+        public async Task<IActionResult> UpdateCustomer(string id, [FromBody] Customer customer)
         {
             id = id.ToUpper();
             customer.CustomerId = customer.CustomerId.ToUpper();
@@ -104,5 +104,3 @@ namespace NorthwindService.Controllers
         }
     }
 }
-
-// test

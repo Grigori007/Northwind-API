@@ -2,18 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindContextLib
 {
-    public class EmployeeDto : INorthwindDb
+    public class Employee : INorthwindDb
     {
-        public EmployeeDto()
+        public Employee()
         {
-            this.Orders = new Collection<OrderDto>();
+            this.Orders = new Collection<Order>();
         }
 
-        [Key]
         public int EmployeeId { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -30,8 +28,8 @@ namespace NorthwindContextLib
         public string Extension { get; set; }
         public string Notes { get; set; }
         public int ReportsTo { get; set; }
-        public EmployeeDto Manager { get; set; }
-        public ICollection<OrderDto> Orders { get; set; }
+        public virtual Employee Manager { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
 
         public int EntityId => EmployeeId;
     }

@@ -2,30 +2,28 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 
-namespace NorthwindContextLib 
+namespace NorthwindContextLib
 {
-    public class OrderDto : INorthwindDb
+    public class Order : INorthwindDb
     {
-        public OrderDto()
+        public Order()
         {
-            this.OrderDetails = new Collection<OrderDetailDto>();
+            this.OrderDetails = new Collection<OrderDetail>();
         }
 
-        [Key]
         public int OrderId { get; set; }
         public string CustomerId { get; set; }
-        public CustomerDto Customer { get; set; }
+        public virtual Customer Customer { get; set; }
         public int EmployeeId { get; set; }
-        public EmployeeDto Employee { get; set; }
+        public virtual Employee Employee { get; set; }
         public DateTime? OrderDate { get; set; }
         public DateTime? RequiredDate { get; set; }
         public DateTime? ShippedDate { get; set; }
-        public int ShippedVia { get; set; }
-        public ShipperDto Shipper { get; set; }
+        public int ShippVia { get; set; }
+        public virtual Shipper Shipper { get; set; }
         public decimal? Freight { get; set; } = 0;
-        public ICollection<OrderDetailDto> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
         public int EntityId => OrderId;
     }
