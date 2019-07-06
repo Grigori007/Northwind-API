@@ -1,6 +1,7 @@
 ﻿using NorthwindEntityLib;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindContextLib
 {
@@ -11,7 +12,9 @@ namespace NorthwindContextLib
             this.Products = new Collection<Product>();
         }
 
+        [Required]
         public int SupplierId { get; set; }
+        [Required]
         public string CompanyName { get; set; }
         public string ContactName { get; set; }
         public string ContactTitle { get; set; }
@@ -23,7 +26,7 @@ namespace NorthwindContextLib
         public string Phone { get; set; }
         public string Fax { get; set; }
         public string HomePage { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; }
 
         public int EntityId => SupplierId;
     }
