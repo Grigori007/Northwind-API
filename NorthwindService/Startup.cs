@@ -19,12 +19,11 @@ namespace NorthwindService
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<NorthwindDbContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Northwind;Trusted_Connection=True;MultipleActiveResultSets=true;"));
             services.AddScoped<IRepoCustomer, RepoCustomer>();
-            // registering generic service !!!
+            // registering generic service
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddSwaggerGen(c =>
             {

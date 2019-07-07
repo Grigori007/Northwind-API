@@ -18,6 +18,6 @@ namespace NorthwindContextLib
         [Required]
         public float Discount { get; set; } = 0;
 
-        public int EntityId => OrderId;
+        public dynamic EntityId => OrderId;
     }
 }

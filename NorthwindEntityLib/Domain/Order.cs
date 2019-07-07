@@ -29,6 +29,6 @@ namespace NorthwindContextLib
         public decimal? Freight { get; set; } = 0;
         public ICollection<OrderDetail> OrderDetails { get; set; }
 
-        public int EntityId => OrderId;
+        public dynamic EntityId => OrderId;
     }
 }

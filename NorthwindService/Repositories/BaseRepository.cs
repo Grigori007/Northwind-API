@@ -1,20 +1,17 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using NorthwindContextLib;
+using NorthwindEntityLib;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NorthwindContextLib;
-using NorthwindEntityLib;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace NorthwindService.Repositories
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, INorthwindDb
     {
-        // TODO: string may not work as in ID for all NorthwindDB enitites 
         private readonly NorthwindDbContext dbContext;
-        // Scoped or Transient for cache memory ????
-        private static ConcurrentDictionary<int, TEntity> cacheMemory;
+        private static ConcurrentDictionary<dynamic, TEntity> cacheMemory;
 
         public BaseRepository(NorthwindDbContext _dbContext)
         {
@@ -22,7 +19,7 @@ namespace NorthwindService.Repositories
 
             if (cacheMemory == null)
             {
-                cacheMemory = new ConcurrentDictionary<int, TEntity>
+                cacheMemory = new ConcurrentDictionary<dynamic, TEntity>
                     (dbContext.Set<TEntity>().ToDictionary(t => t.EntityId));
             }
         }
@@ -32,11 +29,11 @@ namespace NorthwindService.Repositories
         public async Task<TEntity> CreateAsync(TEntity entity)
         {
             EntityEntry<TEntity> added = await dbContext.Set<TEntity>().AddAsync(entity);
-            int changed = await dbContext.SaveChangesAsync();
+            int changedEntities = await dbContext.SaveChangesAsync();
             
-            if(changed == 1)
+            if(changedEntities == 1)
             {
-                return cacheMemory.AddOrUpdate(entity.EntityId, entity, UpdateCacheMemory);
+                return cacheMemory.AddOrUpdate(entity.EntityId, entity, UpdateCacheMemory(entity.EntityId, entity));
             }
             else
             {
@@ -45,13 +42,13 @@ namespace NorthwindService.Repositories
         }
 
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(dynamic id)
         {
             return await Task.Run(() => {
                 TEntity entity = dbContext.Set<TEntity>().Find(id);
                 dbContext.Remove(entity);
-                int changed = dbContext.SaveChanges();
-                if (changed == 1)
+                int changedEntities = dbContext.SaveChanges();
+                if (changedEntities == 1)
                 {
                     return Task.Run(() => cacheMemory.TryRemove(id, out entity));
                 }
@@ -69,7 +66,7 @@ namespace NorthwindService.Repositories
         }
 
 
-        public async Task<TEntity> ReadAsync(int id)
+        public async Task<TEntity> ReadAsync(dynamic id)
         {
             return await Task.Run(() => {
                 cacheMemory.TryGetValue(id, out TEntity entity);
@@ -78,12 +75,12 @@ namespace NorthwindService.Repositories
         }
 
 
-        public async Task<TEntity> UpdateAsync(int id, TEntity entity)
+        public async Task<TEntity> UpdateAsync(dynamic id, TEntity entity)
         {
             return await Task.Run(() => {
                 dbContext.Set<TEntity>().Update(entity);
-                int changed = dbContext.SaveChanges();
-                if(changed == 1)
+                int changedEntities = dbContext.SaveChanges();
+                if(changedEntities == 1)
                 {
                     return Task.Run(() => UpdateCacheMemory(id, entity));
                 }
@@ -94,7 +91,7 @@ namespace NorthwindService.Repositories
 
 
         #region OtherMethods
-        private TEntity UpdateCacheMemory(int id, TEntity entity)
+        private TEntity UpdateCacheMemory(dynamic id, TEntity entity)
         {
             if(cacheMemory.TryGetValue(id, out TEntity oldEntity))
             {

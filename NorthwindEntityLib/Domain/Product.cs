@@ -21,6 +21,6 @@ namespace NorthwindContextLib
         [Required]
         public bool Discontinued { get; set; } = false;
 
-        public int EntityId => ProductId;
+        public dynamic EntityId => ProductId;
     }
 }

@@ -37,6 +37,6 @@ namespace NorthwindContextLib
         public Employee Manager { get; set; }
         public ICollection<Order> Orders { get; set; }
 
-        public int EntityId => EmployeeId;
+        public dynamic EntityId => EmployeeId;
     }
 }

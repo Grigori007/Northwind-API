@@ -19,6 +19,6 @@ namespace NorthwindContextLib
         public string Description { get; set; }
         public ICollection<Product> Products { get; set; }
 
-        public int EntityId => CategoryId;
+        public dynamic EntityId => CategoryId;
     }
 }

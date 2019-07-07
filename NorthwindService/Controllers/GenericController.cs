@@ -30,7 +30,7 @@ namespace NorthwindService.Controllers
         // TODO: Find a way to create this atrribute name for each controller
         // GET: api/[name_of_entity]/[id]
         [HttpGet("{id}")]
-        public async Task<IActionResult> ReadOneEntityAsync(int id)
+        public async Task<IActionResult> ReadOneEntityAsync(dynamic id)
         {
             T entity = await repository.ReadAsync(id);
             if (entity == null)
@@ -59,7 +59,7 @@ namespace NorthwindService.Controllers
         // PUT: api/[name_of_entity]/[id]
         // BODY: [name_of_entity](JSON, XML)
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEntity(int id, [FromBody] T entity)
+        public async Task<IActionResult> UpdateEntity(dynamic id, [FromBody] T entity)
         {
             if (entity == null || entity.EntityId != id)
             {
@@ -77,7 +77,7 @@ namespace NorthwindService.Controllers
 
         // DELETE: api/entitys/[id]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEntity(int id)
+        public async Task<IActionResult> DeleteEntity(dynamic id)
         {
             var existingEntity = await repository.ReadAsync(id);
             if (existingEntity == null)

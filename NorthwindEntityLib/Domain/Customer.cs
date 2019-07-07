@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using NorthwindEntityLib;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindContextLib
 {
     // no INorthwindDb beacuse of string ID -> has it's own repo
-    public class Customer
+    public class Customer : INorthwindDb
     {
         public Customer()
         {
@@ -26,5 +27,7 @@ namespace NorthwindContextLib
         public string Phone { get; set; }
         public string Fax { get; set; }
         public ICollection<Order> Orders { get; set; }
+
+        public dynamic EntityId => CustomerId;
     }
 }

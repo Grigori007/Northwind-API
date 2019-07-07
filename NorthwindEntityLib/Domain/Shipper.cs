@@ -19,6 +19,6 @@ namespace NorthwindContextLib
         public string Phone { get; set; }
         public ICollection<Order> Orders { get; set; }
 
-        public int EntityId => ShipperId;
+        public dynamic EntityId => ShipperId;
     }
 }

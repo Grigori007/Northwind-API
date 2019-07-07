@@ -28,6 +28,6 @@ namespace NorthwindContextLib
         public string HomePage { get; set; }
         public ICollection<Product> Products { get; set; }
 
-        public int EntityId => SupplierId;
+        public dynamic EntityId => SupplierId;
     }
 }

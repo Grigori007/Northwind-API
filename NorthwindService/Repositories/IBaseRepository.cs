@@ -1,10 +1,6 @@
-﻿using System;
+﻿using NorthwindEntityLib;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using NorthwindContextLib;
-using NorthwindEntityLib;
 
 namespace NorthwindService.Repositories
 {
@@ -12,9 +8,9 @@ namespace NorthwindService.Repositories
     {
         Task<TEntity> CreateAsync(TEntity entity);
         Task<IEnumerable<TEntity>> ReadAllAsync();
-        Task<TEntity> ReadAsync(int id);
-        Task<TEntity> UpdateAsync(int id, TEntity entity);
-        Task<bool> DeleteAsync(int id);
+        Task<TEntity> ReadAsync(dynamic id);
+        Task<TEntity> UpdateAsync(dynamic id, TEntity entity);
+        Task<bool> DeleteAsync(dynamic id);
 
     }
 }
