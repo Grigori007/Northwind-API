@@ -9,22 +9,20 @@ namespace NorthwindContextLib
         public NorthwindDbContext(DbContextOptions options) : base(options)
         {
             // enabling eager loading 
-            Categories.Include(c => c.Products).ToList();
-            Customers.Include(c => c.Orders).ToList();
-            Employees.Include(c => c.Manager);
-            Employees.Include(c => c.Orders).ToList();
-            Orders.Include(c => c.Customer);
-            Orders.Include(c => c.Employee);
-            Orders.Include(c => c.Shipper);
-            Orders.Include(c => c.OrderDetails).ToList();
-            OrderDetails.Include(c => c.Order);
-            OrderDetails.Include(c => c.Product);
-            Products.Include(c => c.Supplier);
-            Products.Include(c => c.Category);
-            Shippers.Include(c => c.Orders).ToList();
-            Suppliers.Include(c => c.Products).ToList();
-            
-
+            //Categories.Include(c => c.Products).ToList();
+            //Customers.Include(c => c.Orders).ToList();
+            //Employees.Include(c => c.Manager);
+            //Employees.Include(c => c.Orders).ToList();
+            //Orders.Include(c => c.Customer);
+            //Orders.Include(c => c.Employee);
+            //Orders.Include(c => c.Shipper);
+            //Orders.Include(c => c.OrderDetails).ToList();
+            //OrderDetails.Include(c => c.Order);
+            //OrderDetails.Include(c => c.Product);
+            //Products.Include(c => c.Supplier);
+            //Products.Include(c => c.Category);
+            //Shippers.Include(c => c.Orders).ToList();
+            //Suppliers.Include(c => c.Products).ToList();
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -35,11 +33,6 @@ namespace NorthwindContextLib
         public DbSet<Product> Products { get; set; }
         public DbSet<Shipper> Shippers { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseLazyLoadingProxies();
-        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

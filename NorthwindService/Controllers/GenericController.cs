@@ -19,7 +19,7 @@ namespace NorthwindService.Controllers
 
         // GET: api/[name_of_entity]
         [HttpGet]
-        public async Task<IEnumerable<T>> ReadEntitiesAsync()
+        public virtual async Task<IEnumerable<T>> ReadEntitiesAsync()
         {
             return await repository.ReadAllAsync();
         }
@@ -27,7 +27,7 @@ namespace NorthwindService.Controllers
         // TODO: Find a way to create this atrribute name for each controller
         // GET: api/[name_of_entity]/[id]
         [HttpGet("{id}")]
-        public async Task<IActionResult> ReadOneEntityAsync(int id)
+        public virtual async Task<IActionResult> ReadOneEntityAsync(int id)
         {
             T entity = await repository.ReadAsync(id);
             if (entity == null)
@@ -41,7 +41,7 @@ namespace NorthwindService.Controllers
         // POST: api/[name_of_entity]
         // BODY: [name_of_entity](JSON, XML)
         [HttpPost]
-        public async Task<IActionResult> CreateEntity([FromBody] T entity)
+        public virtual async Task<IActionResult> CreateEntity([FromBody] T entity)
         {
             if (entity == null)
             {
@@ -56,7 +56,7 @@ namespace NorthwindService.Controllers
         // PUT: api/[name_of_entity]/[id]
         // BODY: [name_of_entity](JSON, XML)
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEntity(int id, [FromBody] T entity)
+        public virtual async Task<IActionResult> UpdateEntity(int id, [FromBody] T entity)
         {
             if (entity == null || entity.EntityId != id)
             {
@@ -74,7 +74,7 @@ namespace NorthwindService.Controllers
 
         // DELETE: api/entitys/[id]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEntity(int id)
+        public virtual async Task<IActionResult> DeleteEntity(int id)
         {
             var existingEntity = await repository.ReadAsync(id);
             if (existingEntity == null)
