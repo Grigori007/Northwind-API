@@ -1,9 +1,10 @@
 ﻿using NorthwindEntityLib;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindContextLib
 {
-    public class OrderDetail : INorthwindDb
+    public class OrderDetail : IBaseEntity
     {
         [Required]
         public int OrderId { get; set; }
@@ -18,6 +19,7 @@ namespace NorthwindContextLib
         [Required]
         public float Discount { get; set; } = 0;
 
-        public int EntityId => OrderId;
+        [NotMapped]
+        public dynamic EntityId => OrderId;
     }
 }

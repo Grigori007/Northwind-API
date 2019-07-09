@@ -8,7 +8,7 @@ namespace NorthwindService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public abstract class GenericController<T> : ControllerBase where T : class, INorthwindDb
+    public abstract class GenericController<T> : ControllerBase where T : class, IBaseEntity
     {
         private readonly IBaseRepository<T> repository;
 

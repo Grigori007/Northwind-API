@@ -51,6 +51,9 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Category>()
                 .HasMany(c => c.Products)
                 .WithOne(p => p.Category);
+
+            modelBuilder.Entity<Category>()
+                .Ignore(c => c.EntityId);
             #endregion
 
             #region Customer
@@ -74,6 +77,9 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Customer>()
                 .Property(c => c.Country)
                 .HasMaxLength(15);
+
+            modelBuilder.Entity<Customer>()
+                .Ignore(c => c.EntityId);
             #endregion
 
             #region Employee
@@ -97,11 +103,17 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Employee>()
                 .Property(c => c.Country)
                 .HasMaxLength(15);
+
+            modelBuilder.Entity<Employee>()
+                .Ignore(c => c.EntityId);
             #endregion
 
             #region Order
             modelBuilder.Entity<Order>()
                 .HasKey(c => c.OrderId);
+
+            modelBuilder.Entity<Order>()
+                .Ignore(c => c.EntityId);
             #endregion
 
             #region OrderDetail
@@ -110,6 +122,9 @@ namespace NorthwindContextLib
             // defining multi-column main key for OrderDetails table
             modelBuilder.Entity<OrderDetail>()
                 .HasKey(o => new { o.OrderId, o.ProductId });
+
+            modelBuilder.Entity<OrderDetail>()
+                .Ignore(c => c.EntityId);
             #endregion
 
             #region Product
@@ -128,11 +143,17 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Supplier)
                 .WithMany(s => s.Products);
+
+            modelBuilder.Entity<Product>()
+                .Ignore(c => c.EntityId);
             #endregion
 
             #region Shipper
             modelBuilder.Entity<Shipper>()
                  .HasKey(c => c.ShipperId);
+
+            modelBuilder.Entity<Shipper>()
+                .Ignore(c => c.EntityId);
             #endregion
 
             #region Supplier
@@ -147,6 +168,9 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Supplier>()
                 .HasMany(s => s.Products)
                 .WithOne(p => p.Supplier);
+
+            modelBuilder.Entity<Supplier>()
+                .Ignore(c => c.EntityId);
             #endregion
         }
     }

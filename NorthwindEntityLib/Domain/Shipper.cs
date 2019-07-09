@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindContextLib
 {
-    public class Shipper : INorthwindDb
+    public class Shipper : IBaseEntity
     {
         public Shipper()
         {
@@ -19,6 +20,7 @@ namespace NorthwindContextLib
         public string Phone { get; set; }
         public ICollection<Order> Orders { get; set; }
 
-        public int EntityId => ShipperId;
+        [NotMapped]
+        public dynamic EntityId => ShipperId;
     }
 }

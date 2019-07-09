@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindContextLib
 {
-    public class Order : INorthwindDb
+    public class Order : IBaseEntity
     {
         public Order()
         {
@@ -29,6 +29,7 @@ namespace NorthwindContextLib
         public decimal? Freight { get; set; } = 0;
         public ICollection<OrderDetail> OrderDetails { get; set; }
 
-        public int EntityId => OrderId;
+        [NotMapped]
+        public dynamic EntityId => OrderId;
     }
 }

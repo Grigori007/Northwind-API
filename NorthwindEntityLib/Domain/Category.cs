@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindContextLib
 {
-    public class Category : INorthwindDb
+    public class Category : IBaseEntity
     {
         public Category()
         {
@@ -19,6 +20,7 @@ namespace NorthwindContextLib
         public string Description { get; set; }
         public ICollection<Product> Products { get; set; }
 
-        public int EntityId => CategoryId;
+        [NotMapped]
+        public dynamic EntityId => CategoryId;
     }
 }

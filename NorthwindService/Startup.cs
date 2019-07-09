@@ -24,13 +24,13 @@ namespace NorthwindService
         {
             services.AddDbContext<NorthwindDbContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Northwind;Trusted_Connection=True;MultipleActiveResultSets=true;"));
             services.AddScoped<IRepoCustomer, RepoCustomer>();
-            // registering generic service !!!
+            // Registering generic service
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info() {Title = "Northwind API", Version = "v1"});
             });
-            // disable looping in order for eager loading to work properly
+            // Disabling looping in order for eager loading to work properly
             services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
