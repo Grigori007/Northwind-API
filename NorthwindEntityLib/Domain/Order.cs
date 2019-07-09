@@ -2,16 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindContextLib
 {
-    public class Order : INorthwindDb
+    public class Order : IBaseEntity
     {
         public Order()
         {
             this.OrderDetails = new Collection<OrderDetail>();
         }
 
+        [Required]
         public int OrderId { get; set; }
         public string CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
@@ -20,11 +23,12 @@ namespace NorthwindContextLib
         public DateTime? OrderDate { get; set; }
         public DateTime? RequiredDate { get; set; }
         public DateTime? ShippedDate { get; set; }
-        public int ShippVia { get; set; }
+        [Column("ShippVia")]
+        public int ShipperId { get; set; }
         public virtual Shipper Shipper { get; set; }
         public decimal? Freight { get; set; } = 0;
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
-        public int EntityId => OrderId;
+        public dynamic EntityId => OrderId;
     }
 }

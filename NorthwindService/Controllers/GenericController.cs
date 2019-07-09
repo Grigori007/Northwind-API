@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NorthwindEntityLib;
 using NorthwindService.Repositories;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NorthwindService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GenericController<T> : ControllerBase where T : class, INorthwindDb
+    public class GenericController<T> : ControllerBase where T : class, IBaseEntity
     {
         private readonly IBaseRepository<T> repository;
 
