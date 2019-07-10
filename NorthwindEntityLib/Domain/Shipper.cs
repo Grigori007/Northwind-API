@@ -1,4 +1,5 @@
-﻿using NorthwindEntityLib;
+﻿using Newtonsoft.Json;
+using NorthwindEntityLib;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -20,6 +21,7 @@ namespace NorthwindContextLib
         public string Phone { get; set; }
         public ICollection<Order> Orders { get; set; }
 
+        [JsonIgnore]
         [NotMapped]
         public dynamic EntityId => ShipperId;
     }

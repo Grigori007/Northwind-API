@@ -1,4 +1,5 @@
-﻿using NorthwindEntityLib;
+﻿using Newtonsoft.Json;
+using NorthwindEntityLib;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,6 +30,7 @@ namespace NorthwindContextLib
         public decimal? Freight { get; set; } = 0;
         public ICollection<OrderDetail> OrderDetails { get; set; }
 
+        [JsonIgnore]
         [NotMapped]
         public dynamic EntityId => OrderId;
     }

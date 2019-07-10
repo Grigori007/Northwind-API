@@ -1,4 +1,5 @@
-﻿using NorthwindEntityLib;
+﻿using Newtonsoft.Json;
+using NorthwindEntityLib;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,6 +38,7 @@ namespace NorthwindContextLib
         public Employee Manager { get; set; }
         public ICollection<Order> Orders { get; set; }
 
+        [JsonIgnore]
         [NotMapped]
         public dynamic EntityId => EmployeeId;
     }
