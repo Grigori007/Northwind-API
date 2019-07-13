@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindContextLib
 {
-    public class Order : IBaseEntity
+    public class Order
     {
         public Order()
         {
@@ -29,9 +29,5 @@ namespace NorthwindContextLib
         public Shipper Shipper { get; set; }
         public decimal? Freight { get; set; } = 0;
         public ICollection<OrderDetail> OrderDetails { get; set; }
-
-        [JsonIgnore]
-        [NotMapped]
-        public dynamic EntityId => OrderId;
     }
 }

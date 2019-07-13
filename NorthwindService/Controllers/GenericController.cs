@@ -20,36 +20,39 @@ namespace NorthwindService.Controllers
 
         // GET: api/[controller]
         [HttpGet]
-        public virtual async Task<IEnumerable<T>> ReadEntitiesAsync()
+        public virtual Task<IEnumerable<T>> ReadEntitiesAsync()
         {
-            return await repository.ReadAllAsync();
+            return Task.Run(() => 
+            {
+                return repository.GetAll();
+            });  
         }
 
 
         // TODO: Find a way to create this atrribute name for each controller
         // GET: api/[controller]/[id]
         [HttpGet("{id}")]
-        public virtual async Task<IActionResult> ReadOneEntityAsync(int id)
+        public virtual IActionResult ReadOneEntityAsync(int id)
         {
-            T entity = await repository.ReadAsync(id);
-            if (entity == null)
-            {
-                return NotFound();
-            }
-            return new ObjectResult(entity); // 200 OK
+                T entity = repository.Get(id);
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+                return new ObjectResult(entity); // 200 OK         
         }
 
 
         // POST: api/[controller]
         // BODY: [name_of_entity](JSON, XML)
         [HttpPost]
-        public virtual async Task<IActionResult> CreateEntity([FromBody] T entity)
+        public virtual IActionResult CreateEntity([FromBody] T entity)
         {
             if (entity == null)
             {
                 return BadRequest();
             }
-            T added = await repository.CreateAsync(entity);
+            repository.Add(entity);
             //return CreatedAtRoute("ReadOneEntityAsync", new { id = added.EntityId }, entity);
             return new ObjectResult(entity);
         }
@@ -57,33 +60,33 @@ namespace NorthwindService.Controllers
 
         // PUT: api/[controller]/[id]
         // BODY: [controller](JSON, XML)
-        [HttpPut("{id}")]
-        public virtual async Task<IActionResult> UpdateEntity(int id, [FromBody] T entity)
-        {
-            if (entity == null || entity.EntityId != id)
-            {
-                return BadRequest();
-            }
-            var existingEntity = await repository.ReadAsync(id);
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
-            await repository.UpdateAsync(id, entity);
-            return new NoContentResult();
-        }
+        //[HttpPut("{id}")]
+        //public virtual async Task<IActionResult> UpdateEntity(int id, [FromBody] T entity)
+        //{
+        //    if (entity == null || entity.EntityId != id)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    var existingEntity = repository.Get(id);
+        //    if (existingEntity == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    repository.UpdateAsync(id, entity);
+        //    return new NoContentResult();
+        //}
 
 
         // DELETE: api/[controller]/[id]
         [HttpDelete("{id}")]
-        public virtual async Task<IActionResult> DeleteEntity(int id)
+        public virtual IActionResult DeleteEntity(int id)
         {
-            var existingEntity = await repository.ReadAsync(id);
+            T existingEntity = repository.Get(id);
             if (existingEntity == null)
             {
                 return NotFound();
             }
-            bool deletedEntity = await repository.DeleteAsync(id);
+            repository.Remove(id);
             if (deletedEntity)
             {
                 return new NoContentResult();

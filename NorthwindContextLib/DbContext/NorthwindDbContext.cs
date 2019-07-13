@@ -7,21 +7,6 @@ namespace NorthwindContextLib
     {
         public NorthwindDbContext(DbContextOptions options) : base(options)
         {
-            // enabling eager loading 
-            //Categories.Include(c => c.Products).ToList();
-            //Customers.Include(c => c.Orders).ToList();
-            //Employees.Include(c => c.Manager);
-            //Employees.Include(c => c.Orders).ToList();
-            //Orders.Include(c => c.Customer);
-            //Orders.Include(c => c.Employee);
-            //Orders.Include(c => c.Shipper);
-            //Orders.Include(c => c.OrderDetails).ToList();
-            //OrderDetails.Include(c => c.Order);
-            //OrderDetails.Include(c => c.Product);
-            //Products.Include(c => c.Supplier);
-            //Products.Include(c => c.Category);
-            //Shippers.Include(c => c.Orders).ToList();
-            //Suppliers.Include(c => c.Products).ToList();
         }
 
 
@@ -51,9 +36,6 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Category>()
                 .HasMany(c => c.Products)
                 .WithOne(p => p.Category);
-
-            modelBuilder.Entity<Category>()
-                .Ignore(c => c.EntityId);
             #endregion
 
             #region Customer
@@ -77,18 +59,11 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Customer>()
                 .Property(c => c.Country)
                 .HasMaxLength(15);
-
-            modelBuilder.Entity<Customer>()
-                .Ignore(c => c.EntityId);
             #endregion
 
             #region Employee
             modelBuilder.Entity<Employee>()
                 .HasKey(c => c.EmployeeId);
-
-            //modelBuilder.Entity<Employee>()
-            //    .HasOne(c => c.Manager)
-            //    .WithMany()
 
             modelBuilder.Entity<Employee>()
                 .Property(c => c.LastName)
@@ -103,17 +78,11 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Employee>()
                 .Property(c => c.Country)
                 .HasMaxLength(15);
-
-            modelBuilder.Entity<Employee>()
-                .Ignore(c => c.EntityId);
             #endregion
 
             #region Order
             modelBuilder.Entity<Order>()
                 .HasKey(c => c.OrderId);
-
-            modelBuilder.Entity<Order>()
-                .Ignore(c => c.EntityId);
             #endregion
 
             #region OrderDetail
@@ -122,9 +91,6 @@ namespace NorthwindContextLib
             // defining multi-column main key for OrderDetails table
             modelBuilder.Entity<OrderDetail>()
                 .HasKey(o => new { o.OrderId, o.ProductId });
-
-            modelBuilder.Entity<OrderDetail>()
-                .Ignore(c => c.EntityId);
             #endregion
 
             #region Product
@@ -143,17 +109,11 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Supplier)
                 .WithMany(s => s.Products);
-
-            modelBuilder.Entity<Product>()
-                .Ignore(c => c.EntityId);
             #endregion
 
             #region Shipper
             modelBuilder.Entity<Shipper>()
                  .HasKey(c => c.ShipperId);
-
-            modelBuilder.Entity<Shipper>()
-                .Ignore(c => c.EntityId);
             #endregion
 
             #region Supplier
@@ -168,9 +128,6 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Supplier>()
                 .HasMany(s => s.Products)
                 .WithOne(p => p.Supplier);
-
-            modelBuilder.Entity<Supplier>()
-                .Ignore(c => c.EntityId);
             #endregion
         }
     }

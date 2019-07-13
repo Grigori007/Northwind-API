@@ -1,11 +1,9 @@
 ﻿using Newtonsoft.Json;
-using NorthwindEntityLib;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindContextLib
 {
-    public class OrderDetail : IBaseEntity
+    public class OrderDetail
     {
         [Required]
         public int OrderId { get; set; }
@@ -19,9 +17,5 @@ namespace NorthwindContextLib
         public short Quantity { get; set; } = 1;
         [Required]
         public float Discount { get; set; } = 0;
-
-        [JsonIgnore]
-        [NotMapped]
-        public dynamic EntityId => OrderId;
     }
 }

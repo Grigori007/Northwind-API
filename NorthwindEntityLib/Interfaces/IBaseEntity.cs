@@ -2,6 +2,6 @@
 {
     public interface IBaseEntity
     {
-       dynamic EntityId { get; }
+        dynamic EntityId { get; }
     }
 }
