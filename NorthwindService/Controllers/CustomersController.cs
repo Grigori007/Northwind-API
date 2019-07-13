@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using NorthwindContextLib;
 using NorthwindService.Repositories;
 
@@ -8,9 +9,39 @@ namespace NorthwindService.Controllers
     [ApiController]
     public class CustomersController : GenericController<Customer>
     {
+
         public CustomersController(IBaseRepository<Customer> _repo) : base(_repo)
         {
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> ReadOneCustomer([FromQuery]string id)
+        //{
+        //    string upperCaseId = id.ToUpper();
+        //    Customer entity = await repository.ReadAsync(upperCaseId);
+        //    if (entity == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return new ObjectResult(entity);
+        //}
+
+        //public override Task<IActionResult> ReadOneEntityAsync(int id)
+        //{
+        //    return base.ReadOneEntityAsync(id);
+        //}
+
+        //[HttpGet("api/customers/{id}")]
+        //public async Task<IActionResult> ReadOneEntityAsync(string id)
+        //{
+        //    string upperCaseId = id.ToUpper();
+        //    Customer customer = await repository.ReadAsync(upperCaseId);
+        //    if(customer == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return new ObjectResult(customer);
+        //}
 
         //private readonly IRepoCustomer customersRepo;
 

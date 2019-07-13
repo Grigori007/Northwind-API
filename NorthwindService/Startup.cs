@@ -23,7 +23,7 @@ namespace NorthwindService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<NorthwindDbContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Northwind;Trusted_Connection=True;MultipleActiveResultSets=true;"));
-            services.AddScoped<IRepoCustomer, RepoCustomer>();
+            // services.AddScoped<IRepoCustomer, RepoCustomer>();
             // Registering generic service
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddSwaggerGen(c =>

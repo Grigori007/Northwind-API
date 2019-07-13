@@ -10,22 +10,24 @@ namespace NorthwindService.Controllers
     [ApiController]
     public abstract class GenericController<T> : ControllerBase where T : class, IBaseEntity
     {
-        private readonly IBaseRepository<T> repository;
+        protected readonly IBaseRepository<T> repository;
 
         public GenericController(IBaseRepository<T> _repository)
         {
             repository = _repository;
         }
 
-        // GET: api/[name_of_entity]
+
+        // GET: api/[controller]
         [HttpGet]
         public virtual async Task<IEnumerable<T>> ReadEntitiesAsync()
         {
             return await repository.ReadAllAsync();
         }
 
+
         // TODO: Find a way to create this atrribute name for each controller
-        // GET: api/[name_of_entity]/[id]
+        // GET: api/[controller]/[id]
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> ReadOneEntityAsync(int id)
         {
@@ -38,7 +40,7 @@ namespace NorthwindService.Controllers
         }
 
 
-        // POST: api/[name_of_entity]
+        // POST: api/[controller]
         // BODY: [name_of_entity](JSON, XML)
         [HttpPost]
         public virtual async Task<IActionResult> CreateEntity([FromBody] T entity)
@@ -53,8 +55,8 @@ namespace NorthwindService.Controllers
         }
 
 
-        // PUT: api/[name_of_entity]/[id]
-        // BODY: [name_of_entity](JSON, XML)
+        // PUT: api/[controller]/[id]
+        // BODY: [controller](JSON, XML)
         [HttpPut("{id}")]
         public virtual async Task<IActionResult> UpdateEntity(int id, [FromBody] T entity)
         {
@@ -72,7 +74,7 @@ namespace NorthwindService.Controllers
         }
 
 
-        // DELETE: api/entitys/[id]
+        // DELETE: api/[controller]/[id]
         [HttpDelete("{id}")]
         public virtual async Task<IActionResult> DeleteEntity(int id)
         {

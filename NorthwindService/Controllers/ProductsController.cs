@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NorthwindContextLib;
 using NorthwindService.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace NorthwindService.Controllers
 {
