@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NorthwindContextLib;
 using NorthwindService.Repositories;
+using System.Threading.Tasks;
 
 namespace NorthwindService.Controllers
 {
@@ -10,6 +11,19 @@ namespace NorthwindService.Controllers
     {
         public CustomersController(IBaseRepository<Customer> _repo) : base(_repo)
         {
+        }
+
+        // GET: api/[name_of_entity]/[id]
+        [HttpGet("api/Customers/search/{id}")]
+        public virtual async Task<IActionResult> ReadOneCustomerAsync(string id)
+        {
+            id = id.ToUpper();
+            Customer customer = await repository.ReadAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            return new ObjectResult(customer); // 200 OK
         }
 
         //private readonly IRepoCustomer customersRepo;
