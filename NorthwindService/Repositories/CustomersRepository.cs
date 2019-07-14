@@ -1,9 +1,8 @@
-﻿using NorthwindContextLib;
+﻿using Microsoft.EntityFrameworkCore;
+using NorthwindContextLib;
 using NorthwindService.Repositories.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace NorthwindService.Repositories
 {
@@ -11,11 +10,13 @@ namespace NorthwindService.Repositories
     {
         public CustomersRepository(NorthwindDbContext _dbContext) : base(_dbContext)
         {
+            dbContext.Customers.Include(p => p.Orders).ToList();
         }
 
         public Customer Get(string id)
         {
-            throw new NotImplementedException();
+            id = id.ToUpper();
+            return dbContext.Customers.Find(id);
         }
     }
 }

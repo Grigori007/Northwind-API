@@ -23,8 +23,14 @@ namespace NorthwindService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<NorthwindDbContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Northwind;Trusted_Connection=True;MultipleActiveResultSets=true;"));
-            // services.AddScoped<IRepoCustomer, RepoCustomer>();
-            // Registering generic service
+            services.AddScoped(typeof(IBaseRepository<Category>), typeof(CategoriesRepository));
+            services.AddScoped(typeof(IBaseRepository<Customer>), typeof(CustomersRepository));
+            services.AddScoped(typeof(IBaseRepository<Employee>), typeof(EmployeesRepository));
+            services.AddScoped(typeof(IBaseRepository<Order>), typeof(OrdersRepository));
+            services.AddScoped(typeof(IBaseRepository<OrderDetail>), typeof(OrderDetailsRepository));
+            services.AddScoped(typeof(IBaseRepository<Product>), typeof(ProductsRepository));
+            services.AddScoped(typeof(IBaseRepository<Shipper>), typeof(CategoriesRepository));
+            services.AddScoped(typeof(IBaseRepository<Supplier>), typeof(SuppliersRepository));
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddSwaggerGen(c =>
             {

@@ -8,7 +8,7 @@ namespace NorthwindService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public abstract class GenericController<T> : ControllerBase where T : class, IBaseEntity
+    public abstract class GenericController<T> : ControllerBase where T : class
     {
         protected readonly IBaseRepository<T> repository;
 
@@ -20,7 +20,7 @@ namespace NorthwindService.Controllers
 
         // GET: api/[controller]
         [HttpGet]
-        public virtual Task<IEnumerable<T>> ReadEntitiesAsync()
+        public virtual Task<IEnumerable<T>> ReadEntities()
         {
             return Task.Run(() => 
             {
@@ -29,10 +29,9 @@ namespace NorthwindService.Controllers
         }
 
 
-        // TODO: Find a way to create this atrribute name for each controller
         // GET: api/[controller]/[id]
-        [HttpGet("{id}")]
-        public virtual IActionResult ReadOneEntityAsync(int id)
+        [HttpGet("{id:int}")]
+        public virtual IActionResult ReadOneEntity(int id)
         {
                 T entity = repository.Get(id);
                 if (entity == null)
@@ -86,8 +85,8 @@ namespace NorthwindService.Controllers
             {
                 return NotFound();
             }
-            repository.Remove(id);
-            if (deletedEntity)
+            bool hasDeletedEntity = repository.Remove(id);
+            if (hasDeletedEntity)
             {
                 return new NoContentResult();
             }

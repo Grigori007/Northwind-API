@@ -8,7 +8,8 @@ namespace NorthwindService.Repositories
     {
         public ProductsRepository(NorthwindDbContext _dbContext) : base(_dbContext)
         {
-            dbContext.Products.Include(p => p.Category).Include(p => p.Supplier);
+            dbContext.Products.Include(p => p.Supplier);
+            dbContext.Products.Include(p => p.Category);
         }
     }
 }
