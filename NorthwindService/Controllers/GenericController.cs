@@ -77,7 +77,7 @@ namespace NorthwindService.Controllers
 
 
         // DELETE: api/[controller]/[id]
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public virtual IActionResult DeleteEntity(int id)
         {
             T existingEntity = repository.Get(id);

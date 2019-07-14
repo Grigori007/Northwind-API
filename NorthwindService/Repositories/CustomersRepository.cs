@@ -18,5 +18,18 @@ namespace NorthwindService.Repositories
             id = id.ToUpper();
             return dbContext.Customers.Find(id);
         }
+
+        public bool Remove(string id)
+        {
+            id = id.ToUpper();
+            Customer customer = dbContext.Customers.Find(id);
+            dbContext.Remove(customer);
+            int changedEntities = dbContext.SaveChanges();
+            if (changedEntities == 1)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

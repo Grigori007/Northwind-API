@@ -1,6 +1,7 @@
 ﻿using NorthwindContextLib;
 using NorthwindService.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace NorthwindService.Repositories
 {
@@ -8,8 +9,8 @@ namespace NorthwindService.Repositories
     {
         public ProductsRepository(NorthwindDbContext _dbContext) : base(_dbContext)
         {
-            dbContext.Products.Include(p => p.Supplier);
-            dbContext.Products.Include(p => p.Category);
+            //dbContext.Products.Include(p => p.Supplier).ToList();
+            //dbContext.Products.Include(p => p.Category).ToList();
         }
     }
 }

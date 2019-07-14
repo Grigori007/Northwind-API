@@ -26,5 +26,25 @@ namespace NorthwindService.Controllers
             return new ObjectResult(customer);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCustomer(string id)
+        {
+            id = id.ToUpper();
+            Customer customer = convertedRepo.Get(id);
+            if(customer == null)
+            {
+                return NotFound();
+            }
+            bool isCustomerDeleted = convertedRepo.Remove(id);
+            if (isCustomerDeleted)
+            {
+                return new NoContentResult();
+            }
+            else
+            {
+                return BadRequest();
+            } 
+        }
+
     }
 }

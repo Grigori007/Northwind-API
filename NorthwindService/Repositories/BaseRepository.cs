@@ -58,6 +58,7 @@ namespace NorthwindService.Repositories
         public bool Remove(int id)
         {
             var entity = dbContext.Set<TEntity>().Find(id);
+            dbContext.Remove(entity);
             int changedEntities = dbContext.SaveChanges();
             if (changedEntities == 1)
             {
