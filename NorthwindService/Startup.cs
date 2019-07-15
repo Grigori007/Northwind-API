@@ -23,15 +23,22 @@ namespace NorthwindService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<NorthwindDbContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Northwind;Trusted_Connection=True;MultipleActiveResultSets=true;"));
-            // Registering generic service
+            services.AddScoped(typeof(IBaseRepository<Category>), typeof(CategoriesRepository));
+            services.AddScoped(typeof(IBaseRepository<Customer>), typeof(CustomersRepository));
+            services.AddScoped(typeof(IBaseRepository<Employee>), typeof(EmployeesRepository));
+            services.AddScoped(typeof(IBaseRepository<Order>), typeof(OrdersRepository));
+            services.AddScoped(typeof(IBaseRepository<OrderDetail>), typeof(OrderDetailsRepository));
+            services.AddScoped(typeof(IBaseRepository<Product>), typeof(ProductsRepository));
+            services.AddScoped(typeof(IBaseRepository<Shipper>), typeof(ShippersRepository));
+            services.AddScoped(typeof(IBaseRepository<Supplier>), typeof(SuppliersRepository));
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info() {Title = "Northwind API", Version = "v1"});
-            });
             // Disabling looping in order for eager loading to work properly
             services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info() { Title = "Northwind API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

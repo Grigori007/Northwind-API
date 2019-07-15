@@ -1,108 +1,83 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using NorthwindContextLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using NorthwindContextLib;
-using NorthwindEntityLib;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq.Expressions;
 
 namespace NorthwindService.Repositories
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IBaseEntity
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
-        private readonly NorthwindDbContext dbContext;
-        private static ConcurrentDictionary<dynamic, TEntity> cacheMemory;
+        protected readonly NorthwindDbContext dbContext;
 
         public BaseRepository(NorthwindDbContext _dbContext)
         {
             dbContext = _dbContext;
-
-            if (cacheMemory == null)
-            {
-                cacheMemory = new ConcurrentDictionary<dynamic, TEntity>
-                    (dbContext.Set<TEntity>().ToDictionary(t => t.EntityId));
-            }
         }
 
 
         #region CRUD Methods
-        public async Task<TEntity> CreateAsync(TEntity entity)
+        public TEntity Get(int id)
         {
-            EntityEntry<TEntity> added = await dbContext.Set<TEntity>().AddAsync(entity);
-            int changed = await dbContext.SaveChangesAsync();
-            
-            if(changed == 1)
+            return dbContext.Set<TEntity>().Find(id);
+        }
+
+
+        public IEnumerable<TEntity> GetAll()
+        {
+            return dbContext.Set<TEntity>().ToList();
+        }
+
+
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        {
+            return dbContext.Set<TEntity>().Where(predicate);
+        }
+
+
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
+        {
+            return dbContext.Set<TEntity>().FirstOrDefault(predicate);
+        }
+
+
+        public void Add(TEntity entity)
+        {
+            dbContext.Add(entity);
+            dbContext.SaveChanges();
+        }
+
+
+        public void AddRange(IEnumerable<TEntity> entities)
+        {
+            dbContext.AddRange(entities);
+            dbContext.SaveChanges();
+        }
+
+
+        public bool Remove(int id)
+        {
+            var entity = dbContext.Set<TEntity>().Find(id);
+            dbContext.Remove(entity);
+            int changedEntities = dbContext.SaveChanges();
+            if (changedEntities == 1)
             {
-                return cacheMemory.AddOrUpdate(entity.EntityId, entity, UpdateCacheMemory(entity.EntityId, entity));
+                return true;
             }
-            else
-            {
-                return null;
-            }
+            return false;
         }
 
 
-        public async Task<bool> DeleteAsync(dynamic id)
+        public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            return await Task.Run(() => {
-                TEntity entity = dbContext.Set<TEntity>().Find(id);
-                dbContext.Remove(entity);
-                int changed = dbContext.SaveChanges();
-                if (changed == 1)
-                {
-                    return Task.Run(() => cacheMemory.TryRemove(id, out entity));
-                }
-                else
-                {
-                    return null;
-                }
-            });
-        }
-
-
-        public async Task<IEnumerable<TEntity>> ReadAllAsync()
-        {
-            return await Task.Run<IEnumerable<TEntity>>(() => cacheMemory.Values);
-        }
-
-
-        public async Task<TEntity> ReadAsync(dynamic id)
-        {
-            return await Task.Run(() => {
-                cacheMemory.TryGetValue(id, out TEntity entity);
-                return entity;
-            });
-        }
-
-
-        public async Task<TEntity> UpdateAsync(dynamic id, TEntity entity)
-        {
-            return await Task.Run(() => {
-                dbContext.Set<TEntity>().Update(entity);
-                int changed = dbContext.SaveChanges();
-                if(changed == 1)
-                {
-                    return Task.Run(() => UpdateCacheMemory(id, entity));
-                }
-                return null;
-            });
+            dbContext.RemoveRange(entities);
+            dbContext.SaveChanges();
         }
         #endregion
 
 
         #region OtherMethods
-        private TEntity UpdateCacheMemory(dynamic id, TEntity entity)
-        {
-            if(cacheMemory.TryGetValue(id, out TEntity oldEntity))
-            {
-                if(cacheMemory.TryUpdate(id, entity, oldEntity))
-                {
-                    return entity;
-                }
-            }
-            return null;
-        }
+
         #endregion
     }
 }

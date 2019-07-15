@@ -1,11 +1,9 @@
 ﻿using Newtonsoft.Json;
-using NorthwindEntityLib;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindContextLib
 {
-    public class Product : IBaseEntity
+    public class Product
     {
         [Required]
         public int ProductId { get; set; }
@@ -22,9 +20,5 @@ namespace NorthwindContextLib
         public short? ReorderLevel { get; set; } = 0;
         [Required]
         public bool Discontinued { get; set; } = false;
-
-        [JsonIgnore]
-        [NotMapped]
-        public dynamic EntityId => ProductId;
     }
 }
