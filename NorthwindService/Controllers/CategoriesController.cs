@@ -8,7 +8,7 @@ namespace NorthwindService.Controllers
     [ApiController]
     public class CategoriesController : GenericController<Category>
     {
-        public CategoriesController(IBaseRepository<Category> _repo) : base(_repo)
+        public CategoriesController(IBaseRepository<Category> repo) : base(repo)
         {
         }
     }

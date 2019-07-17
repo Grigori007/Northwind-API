@@ -31,7 +31,7 @@ namespace NorthwindService
             services.AddScoped(typeof(IBaseRepository<Product>), typeof(ProductsRepository));
             services.AddScoped(typeof(IBaseRepository<Shipper>), typeof(ShippersRepository));
             services.AddScoped(typeof(IBaseRepository<Supplier>), typeof(SuppliersRepository));
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            // services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             // Disabling looping in order for eager loading to work properly
             services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

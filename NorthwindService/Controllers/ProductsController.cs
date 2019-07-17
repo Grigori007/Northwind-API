@@ -9,7 +9,7 @@ namespace NorthwindService.Controllers
     [ApiController]
     public class ProductsController : GenericController<Product>
     {
-        public ProductsController(IBaseRepository<Product> _productRepo) : base(_productRepo)
+        public ProductsController(IBaseRepository<Product> repo) : base(repo)
         {
         }
     }

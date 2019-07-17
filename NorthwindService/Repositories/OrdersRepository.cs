@@ -7,12 +7,12 @@ namespace NorthwindService.Repositories
 {
     public class OrdersRepository : BaseRepository<Order>, IOrders
     {
-        public OrdersRepository(NorthwindDbContext _dbContext) : base(_dbContext)
+        public OrdersRepository(NorthwindDbContext dbContext) : base(dbContext)
         {
-            dbContext.Orders.Include(p => p.Customer);
-            dbContext.Orders.Include(p => p.Employee);
-            dbContext.Orders.Include(p => p.Shipper);
-            dbContext.Orders.Include(p => p.OrderDetails).ToList();
+            _dbContext.Orders.Include(p => p.Customer);
+            _dbContext.Orders.Include(p => p.Employee);
+            _dbContext.Orders.Include(p => p.Shipper);
+            _dbContext.Orders.Include(p => p.OrderDetails).ToList();
         }
     }
 }

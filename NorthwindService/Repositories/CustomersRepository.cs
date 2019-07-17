@@ -8,7 +8,7 @@ namespace NorthwindService.Repositories
 {
     public class CustomersRepository : BaseRepository<Customer>, ICustomersRepository
     {
-        public CustomersRepository(NorthwindDbContext _dbContext) : base(_dbContext)
+        public CustomersRepository(NorthwindDbContext dbContext) : base(dbContext)
         {
             dbContext.Customers.Include(p => p.Orders).ToList();
         }
@@ -16,15 +16,15 @@ namespace NorthwindService.Repositories
         public Customer Get(string id)
         {
             id = id.ToUpper();
-            return dbContext.Customers.Find(id);
+            return _dbContext.Customers.Find(id);
         }
 
         public bool Remove(string id)
         {
             id = id.ToUpper();
-            Customer customer = dbContext.Customers.Find(id);
-            dbContext.Remove(customer);
-            int changedEntities = dbContext.SaveChanges();
+            Customer customer = _dbContext.Customers.Find(id);
+            _dbContext.Remove(customer);
+            int changedEntities = _dbContext.SaveChanges();
             if (changedEntities == 1)
             {
                 return true;

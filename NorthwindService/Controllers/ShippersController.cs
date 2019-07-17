@@ -8,7 +8,7 @@ namespace NorthwindService.Controllers
     [ApiController]
     public class ShippersController : GenericController<Shipper>
     {
-        public ShippersController(IBaseRepository<Shipper> _repo) : base(_repo)
+        public ShippersController(IBaseRepository<Shipper> repo) : base(repo)
         {
         }
     }

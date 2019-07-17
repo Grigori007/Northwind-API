@@ -8,7 +8,7 @@ namespace NorthwindService.Controllers
     [ApiController]
     public class SuppliersController : GenericController<Supplier>
     {
-        public SuppliersController(IBaseRepository<Supplier> _repo) : base(_repo)
+        public SuppliersController(IBaseRepository<Supplier> repo) : base(repo)
         {
         }
     }

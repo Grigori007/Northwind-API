@@ -7,9 +7,9 @@ namespace NorthwindService.Repositories
 {
     public class ShippersRepository : BaseRepository<Shipper>, IShippers
     {
-        public ShippersRepository(NorthwindDbContext _dbContext) : base(_dbContext)
+        public ShippersRepository(NorthwindDbContext dbContext) : base(dbContext)
         {
-            dbContext.Shippers.Include(p => p.Orders).ToList();
+            _dbContext.Shippers.Include(p => p.Orders).ToList();
         }
     }
 }

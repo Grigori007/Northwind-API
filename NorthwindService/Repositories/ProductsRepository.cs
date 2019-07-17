@@ -7,7 +7,7 @@ namespace NorthwindService.Repositories
 {
     public class ProductsRepository : BaseRepository<Product>, IProducts
     {
-        public ProductsRepository(NorthwindDbContext _dbContext) : base(_dbContext)
+        public ProductsRepository(NorthwindDbContext dbContext) : base(dbContext)
         {
             //dbContext.Products.Include(p => p.Supplier).ToList();
             //dbContext.Products.Include(p => p.Category).ToList();

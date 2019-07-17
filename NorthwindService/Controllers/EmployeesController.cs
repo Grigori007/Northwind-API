@@ -8,7 +8,7 @@ namespace NorthwindService.Controllers
     [ApiController]
     public class EmployeesController : GenericController<Employee>
     {
-        public EmployeesController(IBaseRepository<Employee> _repo) : base(_repo)
+        public EmployeesController(IBaseRepository<Employee> repo) : base(repo)
         { 
         }
     }

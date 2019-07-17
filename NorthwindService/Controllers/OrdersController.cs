@@ -8,7 +8,7 @@ namespace NorthwindService.Controllers
     [ApiController]
     public class OrdersController : GenericController<Order>
     {
-        public OrdersController(IBaseRepository<Order> _repo) : base(_repo)
+        public OrdersController(IBaseRepository<Order> repo) : base(repo)
         {
         }
     }

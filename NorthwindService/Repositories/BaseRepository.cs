@@ -1,4 +1,5 @@
-﻿using NorthwindContextLib;
+﻿using Microsoft.EntityFrameworkCore;
+using NorthwindContextLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,102 +8,99 @@ using System.Threading.Tasks;
 
 namespace NorthwindService.Repositories
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
+    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
-        protected readonly NorthwindDbContext dbContext;
+        protected readonly NorthwindDbContext _dbContext;
 
-        public BaseRepository(NorthwindDbContext _dbContext)
+        public BaseRepository(NorthwindDbContext dbContext)
         {
-            dbContext = _dbContext;
+            _dbContext = dbContext;
         }
 
 
         #region CRUD Methods
-        public TEntity Get(int id)
+        public virtual TEntity Get(int id)
         {
-            return dbContext.Set<TEntity>().Find(id);
+            return _dbContext.Set<TEntity>().Find(id);
         }
 
-        public Task<TEntity> GetAsync(int id)
+        public virtual async Task<TEntity> GetAsync(int id)
         {
-            return dbContext.Set<TEntity>().FindAsync(id);
-        }
-
-
-        public IEnumerable<TEntity> GetAll()
-        {
-            return dbContext.Set<TEntity>().ToList();
-        }
-
-        public Task<IEnumerable<TEntity>> GetAllAsync()
-        {
-            return Task.Run<IEnumerable<TEntity>>(() => dbContext.Set<TEntity>().ToList());    
-        }
-
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
-        {
-            return dbContext.Set<TEntity>().Where(predicate);
-        }
-
-        public Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return Task.Run<IEnumerable<TEntity>>(() => dbContext.Set<TEntity>().Where(predicate));
-        }
-
-        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
-        {
-            return dbContext.Set<TEntity>().FirstOrDefault(predicate);
+            return await _dbContext.Set<TEntity>().FindAsync(id);
         }
 
 
-        public void Add(TEntity entity)
+        public virtual IEnumerable<TEntity> GetAll()
         {
-            dbContext.Add(entity);
-            dbContext.SaveChanges();
+            return _dbContext.Set<TEntity>().ToList();
         }
 
-        public Task AddAsync(TEntity entity)
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return Task.Run(() => 
-            {
-                dbContext.Add(entity);
-                dbContext.SaveChanges();
-            });
+            return await _dbContext.Set<TEntity>().ToListAsync();
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            dbContext.AddRange(entities);
-            dbContext.SaveChanges();
+            return _dbContext.Set<TEntity>().Where(predicate);
         }
 
-        public Task AddRangeAsync(IEnumerable<TEntity> entities)
+        public virtual async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return Task.Run(() =>
-            {
-                AddRange(entities);
-            });
+            return await Task.Run<IEnumerable<TEntity>>(() => _dbContext.Set<TEntity>().Where(predicate));
         }
 
-        public void Update(TEntity entity)
+        public virtual TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
-            dbContext.Set<TEntity>().Update(entity);
-            dbContext.SaveChanges();
+            return _dbContext.Set<TEntity>().FirstOrDefault(predicate);
         }
 
-        public Task UpdateAsync(TEntity entity)
+
+        public virtual TEntity Add(TEntity entity)
         {
-            return Task.Run(() =>
-            {
-                Update(entity);
-            });
+            _dbContext.Add(entity);
+            _dbContext.SaveChanges();
+            return entity;
         }
 
-        public bool Remove(int id)
+        public virtual async Task<TEntity> AddAsync(TEntity entity)
         {
-            var entity = dbContext.Set<TEntity>().Find(id);
-            dbContext.Remove(entity);
-            int changedEntities = dbContext.SaveChanges();
+            await _dbContext.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
+        }
+
+        public virtual IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entities)
+        {
+            _dbContext.AddRange(entities);
+            _dbContext.SaveChanges();
+            return entities;
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities)
+        {
+            await _dbContext.AddRangeAsync(entities);
+            await _dbContext.SaveChangesAsync();
+            return entities;
+        }
+
+        public virtual TEntity Update(TEntity entity)
+        {
+            _dbContext.Set<TEntity>().Update(entity);
+            _dbContext.SaveChanges();
+            return entity;
+        }
+
+        //public virtual async Task UpdateAsync(TEntity entity)
+        //{
+        //    await _dbContext.Set<TEntity>().UpdateAsync()
+        //}
+
+        public virtual bool Remove(int id)
+        {
+            var entity = _dbContext.Set<TEntity>().Find(id);
+            _dbContext.Remove(entity);
+            int changedEntities = _dbContext.SaveChanges();
             if (changedEntities == 1)
             {
                 return true;
@@ -110,33 +108,28 @@ namespace NorthwindService.Repositories
             return false;
         }
 
-        public Task<bool> RemoveAsync(int id)
+        public virtual async Task<bool> RemoveAsync(int id)
         {
-            return Task.Run(() => 
+            var entity = await _dbContext.Set<TEntity>().FindAsync(id);
+            _dbContext.Remove(entity);
+            int changedEntities = await _dbContext.SaveChangesAsync();
+            if (changedEntities == 1)
             {
-                var entity = dbContext.Set<TEntity>().Find(id);
-                dbContext.Remove(entity);
-                int changedEntities = dbContext.SaveChanges();
-                if (changedEntities == 1)
-                {
-                    return true;
-                }
-                return false;
-            });
+                return true;
+            }
+            return false;
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entities)
+        public virtual void RemoveRange(IEnumerable<TEntity> entities)
         {
-            dbContext.RemoveRange(entities);
-            dbContext.SaveChanges();
+            _dbContext.RemoveRange(entities);
+            _dbContext.SaveChanges();
         }
 
-        public Task RemoveRangeAsync(IEnumerable<TEntity> entities)
+        public virtual async Task RemoveRangeAsync(IEnumerable<TEntity> entities)
         {
-            return Task.Run(() => 
-            {
-                RemoveRange(entities);
-            });
+            _dbContext.RemoveRange(entities);
+            await _dbContext.SaveChangesAsync();
         }
         #endregion
 

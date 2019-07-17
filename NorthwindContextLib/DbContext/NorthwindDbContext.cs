@@ -28,6 +28,10 @@ namespace NorthwindContextLib
                 .HasKey(c => c.CategoryId);
 
             modelBuilder.Entity<Category>()
+                .Property(c => c.CategoryId)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Category>()
                 .Property(c => c.CategoryName)
                 .IsRequired() // by default, it's true
                 .HasMaxLength(15);
@@ -41,6 +45,10 @@ namespace NorthwindContextLib
             #region Customer
             modelBuilder.Entity<Customer>()
                 .HasKey(c => c.CustomerId);
+
+            modelBuilder.Entity<Customer>()
+                .Property(c => c.CustomerId)
+                .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Customer>()
                 .Property(c => c.CustomerId)
@@ -66,6 +74,10 @@ namespace NorthwindContextLib
                 .HasKey(c => c.EmployeeId);
 
             modelBuilder.Entity<Employee>()
+                .Property(c => c.EmployeeId)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Employee>()
                 .Property(c => c.LastName)
                 .IsRequired()
                 .HasMaxLength(20);
@@ -83,6 +95,10 @@ namespace NorthwindContextLib
             #region Order
             modelBuilder.Entity<Order>()
                 .HasKey(c => c.OrderId);
+
+            modelBuilder.Entity<Order>()
+                .Property(c => c.OrderId)
+                .ValueGeneratedOnAdd();
             #endregion
 
             #region OrderDetail
@@ -91,6 +107,14 @@ namespace NorthwindContextLib
             // defining multi-column main key for OrderDetails table
             modelBuilder.Entity<OrderDetail>()
                 .HasKey(o => new { o.OrderId, o.ProductId });
+
+            modelBuilder.Entity<OrderDetail>()
+                .Property(c => c.OrderId)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<OrderDetail>()
+                .Property(c => c.ProductId)
+                .ValueGeneratedNever();
             #endregion
 
             #region Product
@@ -109,11 +133,19 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Supplier)
                 .WithMany(s => s.Products);
+
+            modelBuilder.Entity<Product>()
+                .Property(c => c.ProductId)
+                .ValueGeneratedOnAdd();
             #endregion
 
             #region Shipper
             modelBuilder.Entity<Shipper>()
                  .HasKey(c => c.ShipperId);
+
+            modelBuilder.Entity<Shipper>()
+                .Property(c => c.ShipperId)
+                .ValueGeneratedOnAdd();
             #endregion
 
             #region Supplier
@@ -128,6 +160,10 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Supplier>()
                 .HasMany(s => s.Products)
                 .WithOne(p => p.Supplier);
+
+            modelBuilder.Entity<Supplier>()
+                .Property(c => c.SupplierId)
+                .ValueGeneratedOnAdd();
             #endregion
         }
     }

@@ -14,12 +14,11 @@ namespace NorthwindService.Repositories
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate);
-        void Add(TEntity entity);
-        Task AddAsync(TEntity entity);
-        void AddRange(IEnumerable<TEntity> entities);
-        Task AddRangeAsync(IEnumerable<TEntity> entities);
-        void Update(TEntity entity);
-        Task UpdateAsync(TEntity entity);
+        TEntity Add(TEntity entity);
+        Task<TEntity> AddAsync(TEntity entity);
+        IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entities);
+        Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities);
+        TEntity Update(TEntity entity);
         bool Remove(int id);
         Task<bool> RemoveAsync(int id);
         void RemoveRange(IEnumerable<TEntity> entities);

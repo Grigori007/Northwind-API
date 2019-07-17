@@ -8,17 +8,17 @@ namespace NorthwindService.Controllers
     [ApiController]
     public class CustomersController : GenericController<Customer>
     {
-        private CustomersRepository convertedRepo;
+        private CustomersRepository _convertedRepo;
         
-        public CustomersController(IBaseRepository<Customer> _repo) : base(_repo)
+        public CustomersController(IBaseRepository<Customer> repo) : base(repo)
         {
-            convertedRepo = (CustomersRepository)repository;
+            _convertedRepo = (CustomersRepository)_repository;
         }
 
         [HttpGet("{id}")]
         public IActionResult ReadOneCustomer(string id)
         {
-            Customer customer = convertedRepo.Get(id);
+            Customer customer = _convertedRepo.Get(id);
             if (customer == null)
             {
                 return NotFound();
@@ -30,12 +30,12 @@ namespace NorthwindService.Controllers
         public IActionResult DeleteCustomer(string id)
         {
             id = id.ToUpper();
-            Customer customer = convertedRepo.Get(id);
+            Customer customer = _convertedRepo.Get(id);
             if(customer == null)
             {
                 return NotFound();
             }
-            bool isCustomerDeleted = convertedRepo.Remove(id);
+            bool isCustomerDeleted = _convertedRepo.Remove(id);
             if (isCustomerDeleted)
             {
                 return new NoContentResult();

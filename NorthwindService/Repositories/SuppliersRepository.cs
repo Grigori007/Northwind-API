@@ -7,9 +7,9 @@ namespace NorthwindService.Repositories
 {
     public class SuppliersRepository : BaseRepository<Supplier>, ISuppliers
     {
-        public SuppliersRepository(NorthwindDbContext _dbContext) : base(_dbContext)
+        public SuppliersRepository(NorthwindDbContext dbContext) : base(dbContext)
         {
-            dbContext.Suppliers.Include(p => p.Products).ToList();
+            _dbContext.Suppliers.Include(p => p.Products).ToList();
         }
     }
 }
