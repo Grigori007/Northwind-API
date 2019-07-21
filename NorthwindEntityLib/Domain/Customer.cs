@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
+using NorthwindEntityLib;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindContextLib
 {
-    public class Customer
+    public class Customer : IBaseEntity
     {
         public Customer()
         {
@@ -26,5 +28,9 @@ namespace NorthwindContextLib
         public string Phone { get; set; }
         public string Fax { get; set; }
         public ICollection<Order> Orders { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public dynamic EntityId => CustomerId;
     }
 }

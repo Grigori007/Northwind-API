@@ -7,7 +7,7 @@ namespace NorthwindService.Repositories
 {
     public class CategoriesRepository : BaseRepository<Category>, ICategoriesRepository
     {
-        public CategoriesRepository(NorthwindDbContext context) : base(context)
+        public CategoriesRepository(NorthwindDbContext dbContext) : base(dbContext)
         {
             _dbContext.Categories.Include(p => p.Products).ToList();
         }

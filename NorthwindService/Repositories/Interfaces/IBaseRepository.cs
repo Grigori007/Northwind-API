@@ -1,11 +1,12 @@
-﻿using System;
+﻿using NorthwindEntityLib;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace NorthwindService.Repositories
 {
-    public interface IBaseRepository<TEntity> where TEntity : class
+    public interface IBaseRepository<TEntity> where TEntity : class, IBaseEntity
     {
         TEntity Get(int id);
         Task<TEntity> GetAsync(int id);

@@ -8,7 +8,7 @@ namespace NorthwindService.Controllers
     [ApiController]
     public class CustomersController : GenericController<Customer>
     {
-        private CustomersRepository _convertedRepo;
+        private readonly CustomersRepository _convertedRepo;
         
         public CustomersController(IBaseRepository<Customer> repo) : base(repo)
         {

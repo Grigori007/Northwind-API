@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindContextLib
 {
-    public class Employee
+    public class Employee : IBaseEntity
     {
         public Employee()
         {
@@ -37,5 +37,9 @@ namespace NorthwindContextLib
         public int? ReportsTo { get; set; }
         public Employee Manager { get; set; }
         public ICollection<Order> Orders { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public dynamic EntityId => EmployeeId;
     }
 }

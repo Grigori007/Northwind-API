@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NorthwindContextLib;
+using NorthwindEntityLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NorthwindService.Repositories
 {
-    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
+    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IBaseEntity
     {
         protected readonly NorthwindDbContext _dbContext;
 
@@ -16,7 +17,6 @@ namespace NorthwindService.Repositories
         {
             _dbContext = dbContext;
         }
-
 
         #region CRUD Methods
         public virtual TEntity Get(int id)
@@ -28,7 +28,6 @@ namespace NorthwindService.Repositories
         {
             return await _dbContext.Set<TEntity>().FindAsync(id);
         }
-
 
         public virtual IEnumerable<TEntity> GetAll()
         {
@@ -54,7 +53,6 @@ namespace NorthwindService.Repositories
         {
             return _dbContext.Set<TEntity>().FirstOrDefault(predicate);
         }
-
 
         public virtual TEntity Add(TEntity entity)
         {
@@ -86,9 +84,17 @@ namespace NorthwindService.Repositories
 
         public virtual TEntity Update(TEntity entity)
         {
-            _dbContext.Set<TEntity>().Update(entity);
+            //_dbContext.Set<TEntity>().Update(entity);
+            //_dbContext.SaveChanges();
+            //return entity;
+            var existingEntity = _dbContext.Set<TEntity>().Find(entity.EntityId);
+            if(existingEntity == null)
+            {
+                return null;
+            }
+            _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
             _dbContext.SaveChanges();
-            return entity;
+            return existingEntity;
         }
 
         //public virtual async Task UpdateAsync(TEntity entity)

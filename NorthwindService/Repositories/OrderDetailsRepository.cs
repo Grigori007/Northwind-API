@@ -1,5 +1,8 @@
 ﻿using NorthwindContextLib;
 using NorthwindService.Repositories.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace NorthwindService.Repositories
 {
@@ -7,12 +10,14 @@ namespace NorthwindService.Repositories
     {
         public OrderDetailsRepository(NorthwindDbContext dbContext) : base(dbContext)
         {
-
         }
 
-        public OrderDetail Get(int orderId, int productId)
+        public new async Task<IEnumerable<OrderDetail>> Get(int orderId)
         {
-            throw new System.NotImplementedException();
+            return await Task.Run(() => 
+            {
+                return _dbContext.OrderDetails.Where(o => o.OrderId == orderId);
+            });           
         }
     }
 }

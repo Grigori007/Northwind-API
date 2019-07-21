@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
+using NorthwindEntityLib;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NorthwindContextLib
 {
-    public class Supplier
+    public class Supplier : IBaseEntity
     {
         public Supplier()
         {
@@ -27,5 +29,9 @@ namespace NorthwindContextLib
         public string Fax { get; set; }
         public string HomePage { get; set; }
         public ICollection<Product> Products { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public dynamic EntityId => SupplierId;
     }
 }
