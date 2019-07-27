@@ -20,9 +20,9 @@ namespace NorthwindService.Repositories
         IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entities);
         Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities);
         TEntity Update(TEntity entity);
-        bool Remove(int id);
-        Task<bool> RemoveAsync(int id);
-        void RemoveRange(IEnumerable<TEntity> entities);
-        Task RemoveRangeAsync(IEnumerable<TEntity> entities);
+        bool Remove(TEntity entity);
+        Task<bool> RemoveAsync(TEntity entity);
+        bool RemoveRange(IEnumerable<TEntity> entities);
+        Task<bool> RemoveRangeAsync(IEnumerable<TEntity> entities);
     }
 }

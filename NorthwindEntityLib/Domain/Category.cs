@@ -17,6 +17,7 @@ namespace NorthwindContextLib
         [Required]
         public int CategoryId { get; set; }
         [Required]
+        [StringLength(15, ErrorMessage = "Maximum length is 15 characters!")]
         public string CategoryName { get; set; }
         public string Description { get; set; }
         public ICollection<Product> Products { get; set; }

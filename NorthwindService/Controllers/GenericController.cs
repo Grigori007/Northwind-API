@@ -45,9 +45,9 @@ namespace NorthwindService.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CreateEntity([FromBody] T entity)
         {
-            if (entity == null)
+            if (entity == null || ModelState.IsValid == false)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             await _repository.AddAsync(entity);
             //return CreatedAtRoute("ReadOneEntityAsync", new { id = added.EntityId }, entity);
@@ -61,9 +61,9 @@ namespace NorthwindService.Controllers
        [HttpPut("{id}")]
         public virtual async Task<IActionResult> UpdateEntity(int id, [FromBody] T entity)
         {
-            if (entity == null)
+            if (entity == null || ModelState.IsValid == false)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             var existingEntity = await _repository.GetAsync(id);
             if (existingEntity == null)
@@ -85,7 +85,7 @@ namespace NorthwindService.Controllers
             {
                 return NotFound();
             }
-            bool hasDeletedEntity = await _repository.RemoveAsync(id);
+            bool hasDeletedEntity = await _repository.RemoveAsync(existingEntity);
             if (hasDeletedEntity)
             {
                 return new NoContentResult();

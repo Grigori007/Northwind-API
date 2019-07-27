@@ -9,8 +9,8 @@ namespace NorthwindService.Repositories
     {
         public EmployeesRepository(NorthwindDbContext dbContext) : base(dbContext)
         {
-            dbContext.Employees.Include(p => p.Manager);
-            dbContext.Employees.Include(p => p.Orders).ToList();
+            //dbContext.Employees.Include(p => p.Manager).ToList();
+            //dbContext.Employees.Include(p => p.Orders).ToList();
         }
     }
 }

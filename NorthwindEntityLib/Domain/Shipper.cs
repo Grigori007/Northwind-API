@@ -17,7 +17,9 @@ namespace NorthwindContextLib
         [Required]
         public int ShipperId { get; set; }
         [Required]
+        [StringLength(40, ErrorMessage = "Maximum length is 40 characters!")]
         public string CompanyName { get; set; }
+        [StringLength(24, ErrorMessage = "Maximum length is 24 characters!")]
         public string Phone { get; set; }
         public ICollection<Order> Orders { get; set; }
 

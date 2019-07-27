@@ -97,14 +97,9 @@ namespace NorthwindService.Repositories
             return existingEntity;
         }
 
-        //public virtual async Task UpdateAsync(TEntity entity)
-        //{
-        //    await _dbContext.Set<TEntity>().UpdateAsync()
-        //}
-
-        public virtual bool Remove(int id)
+        public virtual bool Remove(TEntity entity)
         {
-            var entity = _dbContext.Set<TEntity>().Find(id);
+            // var entity = _dbContext.Set<TEntity>().Find(id);
             _dbContext.Remove(entity);
             int changedEntities = _dbContext.SaveChanges();
             if (changedEntities == 1)
@@ -114,9 +109,9 @@ namespace NorthwindService.Repositories
             return false;
         }
 
-        public virtual async Task<bool> RemoveAsync(int id)
+        public virtual async Task<bool> RemoveAsync(TEntity entity)
         {
-            var entity = await _dbContext.Set<TEntity>().FindAsync(id);
+            // var entity = await _dbContext.Set<TEntity>().FindAsync(id);
             _dbContext.Remove(entity);
             int changedEntities = await _dbContext.SaveChangesAsync();
             if (changedEntities == 1)
@@ -126,16 +121,26 @@ namespace NorthwindService.Repositories
             return false;
         }
 
-        public virtual void RemoveRange(IEnumerable<TEntity> entities)
+        public virtual bool RemoveRange(IEnumerable<TEntity> entities)
         {
             _dbContext.RemoveRange(entities);
-            _dbContext.SaveChanges();
+            int deletedEntities =_dbContext.SaveChanges();
+            if(deletedEntities == entities.Count())
+            {
+                return true;
+            }
+            return false;
         }
 
-        public virtual async Task RemoveRangeAsync(IEnumerable<TEntity> entities)
-        {
+        public virtual async Task<bool> RemoveRangeAsync(IEnumerable<TEntity> entities)
+        {        
             _dbContext.RemoveRange(entities);
-            await _dbContext.SaveChangesAsync();
+            int deletedEntities = await _dbContext.SaveChangesAsync();
+            if(deletedEntities == entities.Count())
+            {
+                return true;
+            }
+            return false;
         }
         #endregion
 

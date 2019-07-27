@@ -6,6 +6,6 @@ namespace NorthwindService.Repositories.Interfaces
 {
     interface IOrderDetails : IBaseRepository<OrderDetail>
     {
-        new Task<IEnumerable<OrderDetail>> Get(int orderId);
+        new Task<IEnumerable<OrderDetail>> GetAsync(int orderId);
     }
 }

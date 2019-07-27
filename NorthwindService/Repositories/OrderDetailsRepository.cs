@@ -12,7 +12,7 @@ namespace NorthwindService.Repositories
         {
         }
 
-        public new async Task<IEnumerable<OrderDetail>> Get(int orderId)
+        public new async Task<IEnumerable<OrderDetail>> GetAsync(int orderId)
         {
             return await Task.Run(() => 
             {

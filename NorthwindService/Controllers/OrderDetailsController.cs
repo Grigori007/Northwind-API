@@ -21,7 +21,7 @@ namespace NorthwindService.Controllers
         [HttpGet("{id:int}")]
         public override async Task<IActionResult> ReadOneEntity(int id)
         {
-            IEnumerable<OrderDetail> orderDetails = await _convertedRepo.Get(id);
+            IEnumerable<OrderDetail> orderDetails = await _convertedRepo.GetAsync(id);
             if (!orderDetails.Any())
             {
                 return NotFound();
@@ -30,8 +30,23 @@ namespace NorthwindService.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public override async Task<bool>
-            
-        
+        public override async Task<IActionResult> DeleteEntity(int id)
+        {
+            IEnumerable<OrderDetail> existingOrderDetails = await _convertedRepo.GetAsync(id);
+            if (!existingOrderDetails.Any())
+            {
+                return NotFound();
+            }
+            bool hasDeletedEntities = await _convertedRepo.RemoveRangeAsync(existingOrderDetails);
+            if (hasDeletedEntities)
+            {
+                return new NoContentResult();
+            }
+            else
+            {
+                return BadRequest();
+            }        
+        }
+                 
     }
 }

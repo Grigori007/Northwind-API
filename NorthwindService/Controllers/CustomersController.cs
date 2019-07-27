@@ -35,7 +35,7 @@ namespace NorthwindService.Controllers
             {
                 return NotFound();
             }
-            bool isCustomerDeleted = _convertedRepo.Remove(id);
+            bool isCustomerDeleted = _convertedRepo.Remove(customer);
             if (isCustomerDeleted)
             {
                 return new NoContentResult();

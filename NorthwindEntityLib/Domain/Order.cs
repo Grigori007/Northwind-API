@@ -17,6 +17,7 @@ namespace NorthwindContextLib
 
         [Required]
         public int OrderId { get; set; }
+        [StringLength(5, ErrorMessage = "Maximum length is 5 characters!")]
         public string CustomerId { get; set; }
         public Customer Customer { get; set; }
         public int? EmployeeId { get; set; }
