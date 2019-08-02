@@ -19,5 +19,18 @@ namespace NorthwindService.Repositories
                 return _dbContext.OrderDetails.Where(o => o.OrderId == orderId);
             });           
         }
+
+        public override async Task<OrderDetail> UpdateAsync(OrderDetail entity)
+        {
+            OrderDetail existingEntity = await _dbContext.OrderDetails.FindAsync(new { entity.OrderId, entity.ProductId});
+            if (existingEntity == null)
+            {
+                return null;
+            }
+            _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
+            await _dbContext.SaveChangesAsync();
+            return existingEntity;
+        }
+
     }
 }

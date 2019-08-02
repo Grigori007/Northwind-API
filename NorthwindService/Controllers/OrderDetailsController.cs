@@ -29,6 +29,38 @@ namespace NorthwindService.Controllers
             return new ObjectResult(orderDetails);        
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateEntity([FromBody] IEnumerable<OrderDetail> orderDetails)
+        {
+            if (orderDetails.Any() == false || ModelState.IsValid == false)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _convertedRepo.AddRangeAsync(orderDetails);
+            return new ObjectResult(orderDetails);
+        }
+
+        [HttpPut("id:int"]
+        public async Task<IActionResult> UpdateEntity(int id, IEnumerable<OrderDetail> newOrderDetails)
+        {
+            if (newOrderDetails.Any() == false || ModelState.IsValid == false)
+            {
+                return BadRequest(ModelState);
+            }
+            var existingEntities = await _convertedRepo.GetAsync(id);
+            if (existingEntities == null)
+            {
+                return BadRequest();
+            }
+            // TODO: Use list of Task and WhenAll() method
+            foreach (OrderDetail orderDetail in newOrderDetails)
+            {
+                await _convertedRepo.UpdateAsync(orderDetail);
+            }
+            return new NoContentResult();
+        }
+
         [HttpDelete("{id:int}")]
         public override async Task<IActionResult> DeleteEntity(int id)
         {

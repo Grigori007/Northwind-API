@@ -84,11 +84,8 @@ namespace NorthwindService.Repositories
 
         public virtual TEntity Update(TEntity entity)
         {
-            //_dbContext.Set<TEntity>().Update(entity);
-            //_dbContext.SaveChanges();
-            //return entity;
             var existingEntity = _dbContext.Set<TEntity>().Find(entity.EntityId);
-            if(existingEntity == null)
+            if (existingEntity == null)
             {
                 return null;
             }
@@ -97,9 +94,20 @@ namespace NorthwindService.Repositories
             return existingEntity;
         }
 
+        public virtual async Task<TEntity> UpdateAsync(TEntity entity)
+        {
+            var existingEntity = await _dbContext.Set<TEntity>().FindAsync(entity.EntityId);
+            if (existingEntity == null)
+            {
+                return null;
+            }
+            _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
+            await _dbContext.SaveChangesAsync();
+            return existingEntity;
+        }
+
         public virtual bool Remove(TEntity entity)
         {
-            // var entity = _dbContext.Set<TEntity>().Find(id);
             _dbContext.Remove(entity);
             int changedEntities = _dbContext.SaveChanges();
             if (changedEntities == 1)
@@ -111,7 +119,6 @@ namespace NorthwindService.Repositories
 
         public virtual async Task<bool> RemoveAsync(TEntity entity)
         {
-            // var entity = await _dbContext.Set<TEntity>().FindAsync(id);
             _dbContext.Remove(entity);
             int changedEntities = await _dbContext.SaveChangesAsync();
             if (changedEntities == 1)
@@ -125,7 +132,7 @@ namespace NorthwindService.Repositories
         {
             _dbContext.RemoveRange(entities);
             int deletedEntities =_dbContext.SaveChanges();
-            if(deletedEntities == entities.Count())
+            if (deletedEntities == entities.Count())
             {
                 return true;
             }
@@ -136,7 +143,7 @@ namespace NorthwindService.Repositories
         {        
             _dbContext.RemoveRange(entities);
             int deletedEntities = await _dbContext.SaveChangesAsync();
-            if(deletedEntities == entities.Count())
+            if (deletedEntities == entities.Count())
             {
                 return true;
             }
