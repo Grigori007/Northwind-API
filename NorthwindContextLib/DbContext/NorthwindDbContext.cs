@@ -66,6 +66,11 @@ namespace NorthwindContextLib
             modelBuilder.Entity<Customer>()
                 .Property(c => c.Country)
                 .HasMaxLength(15);
+
+            // TODO: Configure custom string ID generator
+            modelBuilder.Entity<Customer>()
+                .Property(c => c.CustomerId)
+                .ValueGeneratedNever();
             #endregion
 
             #region Employee

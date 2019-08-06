@@ -30,7 +30,8 @@ namespace NorthwindService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEntity([FromBody] IEnumerable<OrderDetail> orderDetails)
+        [ActionName("OrderDetails post")]
+        public new async Task<IActionResult> CreateEntity([FromBody] IEnumerable<OrderDetail> orderDetails)
         {
             if (orderDetails.Any() == false || ModelState.IsValid == false)
             {
@@ -41,7 +42,7 @@ namespace NorthwindService.Controllers
             return new ObjectResult(orderDetails);
         }
 
-        [HttpPut("id:int"]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateEntity(int id, IEnumerable<OrderDetail> newOrderDetails)
         {
             if (newOrderDetails.Any() == false || ModelState.IsValid == false)
@@ -51,9 +52,9 @@ namespace NorthwindService.Controllers
             var existingEntities = await _convertedRepo.GetAsync(id);
             if (existingEntities == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-            // TODO: Use list of Task and WhenAll() method
+            // TODO: Use list of Tasks and WhenAll() method
             foreach (OrderDetail orderDetail in newOrderDetails)
             {
                 await _convertedRepo.UpdateAsync(orderDetail);

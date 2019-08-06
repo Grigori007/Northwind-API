@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NorthwindContextLib;
 using NorthwindService.Repositories;
+using System.Threading.Tasks;
 
 namespace NorthwindService.Controllers
 {
@@ -16,9 +17,9 @@ namespace NorthwindService.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult ReadOneCustomer(string id)
+        public async Task<IActionResult> ReadOneCustomer(string id)
         {
-            Customer customer = _convertedRepo.Get(id);
+            Customer customer = await _convertedRepo.GetAsync(id);
             if (customer == null)
             {
                 return NotFound();
@@ -26,16 +27,33 @@ namespace NorthwindService.Controllers
             return new ObjectResult(customer);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCustomer(string id, [FromBody] Customer customer)
+        {
+            if (customer == null || ModelState.IsValid == false)
+            {
+                return BadRequest();
+            }
+            id = id.ToUpper();
+            Customer existingCustomer = await _convertedRepo.GetAsync(id);
+            if (existingCustomer == null)
+            {
+                return NotFound();
+            }
+            await _convertedRepo.UpdateAsync(customer);
+            return new NoContentResult();
+        }
+
         [HttpDelete("{id}")]
-        public IActionResult DeleteCustomer(string id)
+        public async Task<IActionResult> DeleteCustomer(string id)
         {
             id = id.ToUpper();
-            Customer customer = _convertedRepo.Get(id);
+            Customer customer = await _convertedRepo.GetAsync(id);
             if(customer == null)
             {
                 return NotFound();
             }
-            bool isCustomerDeleted = _convertedRepo.Remove(customer);
+            bool isCustomerDeleted = await _convertedRepo.RemoveAsync(customer);
             if (isCustomerDeleted)
             {
                 return new NoContentResult();

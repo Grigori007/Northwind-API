@@ -29,6 +29,7 @@ namespace NorthwindService.Controllers
 
         // GET: api/[controller]/[id]
         [HttpGet("{id:int}")]
+        [ActionName("Generic post")]
         public virtual async Task<IActionResult> ReadOneEntity(int id)
         {
                 T entity = await _repository.GetAsync(id);
@@ -50,7 +51,6 @@ namespace NorthwindService.Controllers
                 return BadRequest(ModelState);
             }
             await _repository.AddAsync(entity);
-            //return CreatedAtRoute("ReadOneEntityAsync", new { id = added.EntityId }, entity);
             return new ObjectResult(entity);
         }
 
@@ -58,7 +58,7 @@ namespace NorthwindService.Controllers
         //PUT: api/[controller]/[id]
         //BODY: [controller]
         //(JSON, XML)
-       [HttpPut("{id}")]
+       [HttpPut("{id:int}")]
         public virtual async Task<IActionResult> UpdateEntity(int id, [FromBody] T entity)
         {
             if (entity == null || ModelState.IsValid == false)
