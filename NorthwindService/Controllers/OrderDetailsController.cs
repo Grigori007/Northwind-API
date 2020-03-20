@@ -31,7 +31,7 @@ namespace NorthwindService.Controllers
 
         [HttpPost]
         [ActionName("OrderDetails post")]
-        public new async Task<IActionResult> CreateEntity([FromBody] IEnumerable<OrderDetail> orderDetails)
+        public async Task<IActionResult> CreateEntity([FromBody] IEnumerable<OrderDetail> orderDetails)
         {
             if (orderDetails.Any() == false || ModelState.IsValid == false)
             {

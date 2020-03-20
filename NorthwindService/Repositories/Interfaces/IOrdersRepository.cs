@@ -2,7 +2,7 @@
 
 namespace NorthwindService.Repositories.Interfaces
 {
-    interface IProducts : IBaseRepository<Product>
+    public interface IOrdersRepository : IBaseRepository<Order>
     {
     }
 }

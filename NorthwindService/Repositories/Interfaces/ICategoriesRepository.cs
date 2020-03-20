@@ -2,7 +2,7 @@
 
 namespace NorthwindService.Repositories.Interfaces
 {
-    interface ICategoriesRepository : IBaseRepository<Category>
+    public interface ICategoriesRepository : IBaseRepository<Category>
     {
     }
 }

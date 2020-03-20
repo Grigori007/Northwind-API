@@ -2,7 +2,7 @@
 
 namespace NorthwindService.Repositories.Interfaces
 {
-    interface IEmployeesRepository : IBaseRepository<Employee>
+    public interface IEmployeesRepository : IBaseRepository<Employee>
     {
     }
 }

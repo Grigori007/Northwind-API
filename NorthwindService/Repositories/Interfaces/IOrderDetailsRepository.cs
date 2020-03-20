@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace NorthwindService.Repositories.Interfaces
 {
-    interface IOrderDetails : IBaseRepository<OrderDetail>
+    public interface IOrderDetailsRepository : IBaseRepository<OrderDetail>
     {
         new Task<IEnumerable<OrderDetail>> GetAsync(int orderId);
     }

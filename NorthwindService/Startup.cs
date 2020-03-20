@@ -12,17 +12,17 @@ namespace NorthwindService
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<NorthwindDbContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Northwind;Trusted_Connection=True;MultipleActiveResultSets=true;"));
+            services.AddDbContext<NorthwindDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Northwind")));
             services.AddScoped(typeof(IBaseRepository<Category>), typeof(CategoriesRepository));
             services.AddScoped(typeof(IBaseRepository<Customer>), typeof(CustomersRepository));
             services.AddScoped(typeof(IBaseRepository<Employee>), typeof(EmployeesRepository));

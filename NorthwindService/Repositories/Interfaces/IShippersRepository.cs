@@ -2,7 +2,7 @@
 
 namespace NorthwindService.Repositories.Interfaces
 {
-    interface ISuppliers : IBaseRepository<Supplier>
+    public interface IShippersRepository : IBaseRepository<Shipper>
     {
     }
 }

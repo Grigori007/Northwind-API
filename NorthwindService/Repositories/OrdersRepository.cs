@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace NorthwindService.Repositories
 {
-    public class OrdersRepository : BaseRepository<Order>, IOrders
+    public class OrdersRepository : BaseRepository<Order>, IOrdersRepository
     {
         public OrdersRepository(NorthwindDbContext dbContext) : base(dbContext)
         {

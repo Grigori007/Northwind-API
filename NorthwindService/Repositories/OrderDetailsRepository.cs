@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NorthwindService.Repositories
 {
-    public class OrderDetailsRepository : BaseRepository<OrderDetail>, IOrderDetails
+    public class OrderDetailsRepository : BaseRepository<OrderDetail>, IOrderDetailsRepository
     {
         public OrderDetailsRepository(NorthwindDbContext dbContext) : base(dbContext)
         {
